@@ -20,17 +20,24 @@ public class AIRace : RaceManager
         foreach (Racer racer in _racers)
         {
             racer.UpdateProgress(_checkPoints);
-            if (racer.HasFinisded)
+            if (racer.HasFinished)
             {
                 StopRace();
             }
         }
+
+        List<Racer> ordered = GetRankedRacers();
+        if(ordered.Count > 0)
+        {
+            Debug.Log($"Classement actuel: {string.Join(", ", ordered.Select(r => r.RacerName))}");
+        }
+
     }
     
     public override void CheckWinCondition()
     {
-        List<Racer> racersOrdered = _racers.OrderByDescending(racer => racer.CurrentLap).ThenBy(racer => racer.DistToFinishLine).ToList();
-        Racer _winner = racersOrdered.First();
-        Debug.Log($"Winner is {_winner}");
+        List<Racer> ordered = GetRankedRacers();
+        Racer winner = ordered.First();
+        Debug.Log($"Winner is {winner.RacerName}");
     }
 }

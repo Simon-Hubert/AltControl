@@ -1,16 +1,26 @@
+using System;
 using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [SerializeField] private int _index;
+    [SerializeField] private bool _isFinishLine;
+    
+    public int Index => _index;
+    public bool IsFinishLine => _isFinishLine;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        Racer racer = other.GetComponent<Racer>();
+        if (racer != null)
+        {
+            racer.OnCheckPointPassed(this);
+        }
+    }
+    
+    public void SetData(int index, bool isFinishLine)
+    {
+        _index = index;
+        _isFinishLine = isFinishLine;
     }
 }
