@@ -9,16 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f198092b1d32e774a98070471d55cecd, type: 3}
-  m_Name: ChariotConfig
+  m_Script: {fileID: 11500000, guid: 690b3c62d47954f4abd97a8ae16af522, type: 3}
+  m_Name: SecondDegreeSmoother
   m_EditorClassIdentifier: 
-  ChariotPosF: 3
-  ChariotPosZ: 1
-  ChariotPosR: 0
-  ChariotRotF: 0.5
-  ChariotRotZ: 1
-  ChariotRotR: 0
-  HorseBrakeForce: 5
-  HorseFriction: 0.1
-  HorseSpeed: 2
-  RushForce: 40
+  _f: 3
+  _z: 1
+  _r: 0.5

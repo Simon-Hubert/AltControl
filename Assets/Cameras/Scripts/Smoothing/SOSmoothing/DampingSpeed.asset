@@ -9,16 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f198092b1d32e774a98070471d55cecd, type: 3}
-  m_Name: ChariotConfig
+  m_Script: {fileID: 11500000, guid: 169871f912deac94bb3ad02b26c0fc45, type: 3}
+  m_Name: DampingSpeed
   m_EditorClassIdentifier: 
-  ChariotPosF: 3
-  ChariotPosZ: 1
-  ChariotPosR: 0
-  ChariotRotF: 0.5
-  ChariotRotZ: 1
-  ChariotRotR: 0
-  HorseBrakeForce: 5
-  HorseFriction: 0.1
-  HorseSpeed: 2
-  RushForce: 40
+  _dampingCoefficient: 0.1

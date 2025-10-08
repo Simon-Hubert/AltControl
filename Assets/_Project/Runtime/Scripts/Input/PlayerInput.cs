@@ -21,8 +21,8 @@ public class PlayerInput : MonoBehaviour
         _rightAxis.action.canceled += RightAxis;
         _leftAxis.action.performed += LeftAxis;
         _leftAxis.action.canceled += LeftAxis;
-        _rightButton.action.performed += RightButton;
-        _leftButton.action.performed += LeftButton;
+        _rightButton.action.started += RightButton;
+        _leftButton.action.started += LeftButton;
     }
     
     private void OnDisable() {
@@ -31,8 +31,8 @@ public class PlayerInput : MonoBehaviour
         _leftAxis.action.performed -= LeftAxis;
         _leftAxis.action.canceled -= LeftAxis;
 
-        _rightButton.action.performed -= RightButton;
-        _leftButton.action.performed -= LeftButton;
+        _rightButton.action.started -= RightButton;
+        _leftButton.action.started -= LeftButton;
     }
 
     

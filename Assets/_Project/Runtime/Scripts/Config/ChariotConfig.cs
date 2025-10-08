@@ -13,7 +13,6 @@ public class ChariotConfig : ScriptableObject
     public float ChariotRotR;
 
     [Header("Horses")]
-    public float HorseSpringFactor;
     public float HorseBrakeForce;
     public float HorseFriction;
     public float HorseSpeed;
