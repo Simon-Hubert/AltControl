@@ -7,5 +7,6 @@ public class RaceConfig : ScriptableObject
     public bool AllowAI = true; 
     public bool AllowPlayers = true; 
     public bool EnableDestruction = false; 
-    public float TimeLimit = 0f; 
+    public float TimeLimit = 0f;
+    public int Racers = 1;
 }
