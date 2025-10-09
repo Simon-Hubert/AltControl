@@ -42,7 +42,6 @@ public class ChariotController : MonoBehaviour, IControllable
         currentBrake = BrakeInput * brakeForce;
 
         if (RushInput) {
-            Debug.Log("rushed !");
             _rb.AddForce(_rb.transform.forward * rushForce, ForceMode.VelocityChange);
             _leftRushInput = false;
             _rightRushInput = false;
