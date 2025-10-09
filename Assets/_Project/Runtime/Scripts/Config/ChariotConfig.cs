@@ -1,5 +1,6 @@
 using NaughtyAttributes;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "ChariotConfig", menuName = "ChariotConfig")]
