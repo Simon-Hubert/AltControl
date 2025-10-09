@@ -5,13 +5,12 @@ using UnityEngine;
 public class RaceSimulation : MonoBehaviour
 {
 [Header("Simulation Settings")]
-    [SerializeField] private int racerCount = 5;
     [SerializeField] private int checkpointCount = 6;
-    [SerializeField] private int lapsToWin = 3;
     [SerializeField] private float trackRadius = 50f;
     [SerializeField] private float racerSpeedMin = 15f;
     [SerializeField] private float racerSpeedMax = 25f;
     [SerializeField] private float checkpointRadius = 3f;
+    [SerializeField] private RaceManager _racemanager;
 
     private List<CheckPoint> _checkpoints = new();
     private List<Racer> _racers = new();
@@ -20,14 +19,16 @@ public class RaceSimulation : MonoBehaviour
     void Start()
     {
         GenerateTrack();
-        SpawnRacers();
+        _racemanager.Init(_checkpoints);
 
         Debug.Log($"🏁 Simulation started with {_racers.Count} racers on {_checkpoints.Count} checkpoints!");
+        _racers = _racemanager.Racers;
+        _racemanager.StartRace();
     }
 
     void Update()
     {
-        if (_raceFinished) return;
+        if (_raceFinished || !_racemanager.RaceStarted) return;
 
         // Update chaque racer
         foreach (var r in _racers)
@@ -68,23 +69,6 @@ public class RaceSimulation : MonoBehaviour
             CheckPoint cp = go.AddComponent<CheckPoint>();
             cp.SetData(i, i == 0); // 0 = ligne d’arrivée
             _checkpoints.Add(cp);
-        }
-    }
-
-    // --- Création des racers ---
-    private void SpawnRacers()
-    {
-        for (int i = 0; i < racerCount; i++)
-        {
-            GameObject go = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            go.name = $"Racer_{i + 1}";
-            go.transform.position = _checkpoints[0].transform.position + new Vector3(i * 2, 0, 0);
-
-            Racer racer = go.AddComponent<Racer>();
-            float randomSpeed = Random.Range(racerSpeedMin, racerSpeedMax);
-            racer.InitSimulation(_checkpoints, lapsToWin, randomSpeed);
-
-            _racers.Add(racer);
         }
     }
 

@@ -16,10 +16,20 @@ public abstract class RaceManager : MonoBehaviour
     
     public RaceConfig RaceConfig => _raceConfig;
     public bool RaceStarted => _raceStarted;
+    public List<Racer> Racers => _racers;
 
-    public virtual void Init()
+    public virtual void Init(List<CheckPoint> checkpoints = null)
     {
-        _checkPoints = FindObjectsOfType<CheckPoint>().OrderBy(c => c.Index).ToList();
+        if (checkpoints != null)
+        {
+            _checkPoints = checkpoints;
+            _checkPoints.OrderBy(c => c.Index).ToList();
+        }
+        else
+        {
+            _checkPoints = FindObjectsOfType<CheckPoint>().OrderBy(c => c.Index).ToList();
+
+        }
         _racers = FindObjectsOfType<Racer>().ToList();
         
         foreach (var r in _racers)
