@@ -12,6 +12,9 @@ public class ChariotController : MonoBehaviour, IControllable
     private float a;
     private float brakeForce;
     private float maxTurnAngle;
+    private float rushForce;
+    /*private float rushDuration;
+    private AnimationCurve rushForceCurve;*/
 
     private float currentAcc;
     private float currentBrake;
@@ -27,11 +30,18 @@ public class ChariotController : MonoBehaviour, IControllable
     private float BrakeInput => (_rightAxisInput + _leftAxisInput) / 2f;
     private float RotationInput => _rightAxisInput - _leftAxisInput;
 
+    private Coroutine RushRoutine;
+
+    [SerializeField] private Rigidbody _rb;
+
     private void Awake() {
         ChariotConfig config = Resources.Load<ChariotConfig>("ChariotConfig");
         a = config.Acceleration;
         brakeForce = config.BrakeForce;
         maxTurnAngle = config.SteerAngle;
+        rushForce = config.RushForce;
+        //rushDuration = config.RushDuration;
+        //rushForceCurve = config.RushForceCurve;
         
         _frontLeft.forwardFriction = config.ForwardFriction;
         _frontRight.forwardFriction = config.ForwardFriction;
@@ -42,12 +52,19 @@ public class ChariotController : MonoBehaviour, IControllable
         _frontRight.sidewaysFriction = config.SidewaysFriction;
         _backLeft.sidewaysFriction = config.SidewaysFriction;
         _backRight.sidewaysFriction = config.SidewaysFriction;
+        
+        currentAcc = a;
+        
     }
 
-
     private void FixedUpdate() {
-        currentAcc = a;
         currentBrake = BrakeInput * brakeForce;
+
+        if (RushInput) {
+            _rb.AddForce(transform.forward * rushForce, ForceMode.Impulse);
+            _leftRushInput = false;
+            _rightRushInput = false;
+        }
         
         _frontRight.motorTorque = currentAcc;
         _frontLeft.motorTorque = currentAcc;
@@ -78,6 +95,21 @@ public class ChariotController : MonoBehaviour, IControllable
     public void OnLeftButton() {
         StartCoroutine(ResetLeftBoolCoroutine());
     }
+
+    /*private IEnumerator Rush() {
+        currentAcc = a + rushForce;
+        float t = 0;
+        
+        while (t < rushDuration) {
+            t += Time.fixedDeltaTime;
+            float p = t / rushDuration;
+            p = rushForceCurve.Evaluate(p);
+            currentAcc = Mathf.Lerp(a + rushForce, a, p);
+            yield return new WaitForFixedUpdate();
+        }
+
+        currentAcc = a;
+    }*/
     
     private IEnumerator ResetRightBoolCoroutine() {
         _rightRushInput = true;

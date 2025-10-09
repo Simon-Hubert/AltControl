@@ -9,6 +9,9 @@ public class ChariotConfig : ScriptableObject
     public float Acceleration;
     public float BrakeForce;
     public float SteerAngle;
+    public float RushForce;
+    //public float RushDuration;
+    //public AnimationCurve RushForceCurve;
 
     [Header("Forward Friction")] 
     [SerializeField, Label("Extremum Slip")]   private float ExtremumForwardSlip;

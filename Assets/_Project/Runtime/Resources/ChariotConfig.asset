@@ -15,6 +15,32 @@ MonoBehaviour:
   Acceleration: 500
   BrakeForce: 500
   SteerAngle: 20
+  RushForce: 700
+  RushDuration: 2
+  RushForceCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   ExtremumForwardSlip: 0.4
   ExtremumForwardValue: 1
   AsymptoteForwardSlip: 0.8
