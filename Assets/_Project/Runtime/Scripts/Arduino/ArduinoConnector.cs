@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using System.IO.Ports;
+/*using System.IO.Ports;
 
 public class ArduinoConnector : MonoBehaviour
 {
@@ -19,4 +19,4 @@ public class ArduinoConnector : MonoBehaviour
         //int value = int.Parse(message);
         Debug.Log(message);
     }
-}
+}*/
