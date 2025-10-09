@@ -1002,8 +1002,8 @@ HingeJoint:
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   m_UseSpring: 1
   m_Spring:
-    spring: 250
-    damper: 0
+    spring: 300
+    damper: 20
     targetPosition: 0
   m_UseMotor: 0
   m_Motor:
@@ -1014,8 +1014,8 @@ HingeJoint:
   m_ExtendedLimits: 0
   m_UseAcceleration: 0
   m_Limits:
-    min: -9.461657
-    max: 10.676849
+    min: -5
+    max: 5
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0

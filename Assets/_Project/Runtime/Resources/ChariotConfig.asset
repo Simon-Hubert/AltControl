@@ -12,13 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f198092b1d32e774a98070471d55cecd, type: 3}
   m_Name: ChariotConfig
   m_EditorClassIdentifier: 
-  ChariotPosF: 3
-  ChariotPosZ: 1
-  ChariotPosR: 0
-  ChariotRotF: 0.5
-  ChariotRotZ: 1
-  ChariotRotR: 0
-  HorseBrakeForce: 5
-  HorseFriction: 0.1
-  HorseSpeed: 2
-  RushForce: 40
+  Acceleration: 500
+  BrakeForce: 500
+  SteerAngle: 20
+  ExtremumForwardSlip: 0.4
+  ExtremumForwardValue: 1
+  AsymptoteForwardSlip: 0.8
+  AsymptoteForwardValue: 0.5
+  ForwardStiffness: 1
+  ExtremumSidewaysSlip: 0.5
+  ExtremumSidewaysValue: 1
+  AsymptoteSidewaysSlip: 0.5
+  AsymptoteSidewaysValue: 0.75
+  SidewaysStiffness: 1

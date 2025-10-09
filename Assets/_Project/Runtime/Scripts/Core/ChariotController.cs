@@ -9,9 +9,9 @@ public class ChariotController : MonoBehaviour, IControllable
     [SerializeField] private WheelCollider _backLeft;
     [SerializeField] private WheelCollider _backRight;
 
-    [SerializeField] private float a;
-    [SerializeField] private float brakeForce;
-    [SerializeField] private float maxTurnAngle;
+    private float a;
+    private float brakeForce;
+    private float maxTurnAngle;
 
     private float currentAcc;
     private float currentBrake;
@@ -26,6 +26,23 @@ public class ChariotController : MonoBehaviour, IControllable
     
     private float BrakeInput => (_rightAxisInput + _leftAxisInput) / 2f;
     private float RotationInput => _rightAxisInput - _leftAxisInput;
+
+    private void Awake() {
+        ChariotConfig config = Resources.Load<ChariotConfig>("ChariotConfig");
+        a = config.Acceleration;
+        brakeForce = config.BrakeForce;
+        maxTurnAngle = config.SteerAngle;
+        
+        _frontLeft.forwardFriction = config.ForwardFriction;
+        _frontRight.forwardFriction = config.ForwardFriction;
+        _backLeft.forwardFriction = config.ForwardFriction;
+        _backRight.forwardFriction = config.ForwardFriction;
+        
+        _frontLeft.sidewaysFriction = config.SidewaysFriction;
+        _frontRight.sidewaysFriction = config.SidewaysFriction;
+        _backLeft.sidewaysFriction = config.SidewaysFriction;
+        _backRight.sidewaysFriction = config.SidewaysFriction;
+    }
 
 
     private void FixedUpdate() {
@@ -45,10 +62,6 @@ public class ChariotController : MonoBehaviour, IControllable
         _frontRight.steerAngle = currentTurnAngle;
     }
     
-    
-    
-    
-
 
     public void OnRightAxis(float value) {
         _rightAxisInput = value;
