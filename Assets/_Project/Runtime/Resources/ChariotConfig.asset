@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: ChariotConfig
   m_EditorClassIdentifier: 
   Acceleration: 500
-  BrakeForce: 500
-  SteerAngle: 20
-  ExtremumForwardSlip: 0.4
-  ExtremumForwardValue: 1
-  AsymptoteForwardSlip: 0.8
+  BrakeForce: 750
+  SteerAngle: 14
+  ExtremumForwardSlip: 0.6
+  ExtremumForwardValue: 0.7
+  AsymptoteForwardSlip: 1
   AsymptoteForwardValue: 0.5
   ForwardStiffness: 1
-  ExtremumSidewaysSlip: 0.5
+  ExtremumSidewaysSlip: 0.9
   ExtremumSidewaysValue: 1
-  AsymptoteSidewaysSlip: 0.5
-  AsymptoteSidewaysValue: 0.75
+  AsymptoteSidewaysSlip: 1
+  AsymptoteSidewaysValue: 0.5
   SidewaysStiffness: 1
