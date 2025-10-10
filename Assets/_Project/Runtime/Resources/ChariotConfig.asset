@@ -12,16 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f198092b1d32e774a98070471d55cecd, type: 3}
   m_Name: ChariotConfig
   m_EditorClassIdentifier: 
-  Acceleration: 500
-  BrakeForce: 750
-  SteerAngle: 14
-  ExtremumForwardSlip: 0.6
-  ExtremumForwardValue: 0.7
-  AsymptoteForwardSlip: 1
-  AsymptoteForwardValue: 0.5
-  ForwardStiffness: 1
-  ExtremumSidewaysSlip: 0.9
-  ExtremumSidewaysValue: 1
-  AsymptoteSidewaysSlip: 1
-  AsymptoteSidewaysValue: 0.5
-  SidewaysStiffness: 1
+  MaxSpeed: 40
+  BrakeFactor: 1.5
+  SteerAngle: 20
+  RushForce: 20
+  Friction: 0.2
+  DriftFactor: 4

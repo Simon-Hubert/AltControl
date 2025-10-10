@@ -12,6 +12,7 @@ public class ChariotController : MonoBehaviour, IControllable
     private float a;
     private float brakeForce;
     private float maxTurnAngle;
+    private float rushForce;
 
     private float currentAcc;
     private float currentBrake;
@@ -27,35 +28,26 @@ public class ChariotController : MonoBehaviour, IControllable
     private float BrakeInput => (_rightAxisInput + _leftAxisInput) / 2f;
     private float RotationInput => _rightAxisInput - _leftAxisInput;
 
+    private ChariotConfig config;
+
+    [SerializeField] private Rigidbody _rb;
+
     private void Awake() {
-        ChariotConfig config = Resources.Load<ChariotConfig>("ChariotConfig");
-        a = config.Acceleration;
-        brakeForce = config.BrakeForce;
-        maxTurnAngle = config.SteerAngle;
-        
-        _frontLeft.forwardFriction = config.ForwardFriction;
-        _frontRight.forwardFriction = config.ForwardFriction;
-        _backLeft.forwardFriction = config.ForwardFriction;
-        _backRight.forwardFriction = config.ForwardFriction;
-        
-        _frontLeft.sidewaysFriction = config.SidewaysFriction;
-        _frontRight.sidewaysFriction = config.SidewaysFriction;
-        _backLeft.sidewaysFriction = config.SidewaysFriction;
-        _backRight.sidewaysFriction = config.SidewaysFriction;
+        config = Resources.Load<ChariotConfig>("ChariotConfig");
+        UpdateConfig();
+        currentAcc = a;
     }
 
-
     private void FixedUpdate() {
-        currentAcc = a;
         currentBrake = BrakeInput * brakeForce;
+
+        if (RushInput) {
+            _rb.AddForce(_rb.transform.forward * rushForce, ForceMode.VelocityChange);
+            _leftRushInput = false;
+            _rightRushInput = false;
+        }
         
-        _frontRight.motorTorque = currentAcc;
-        _frontLeft.motorTorque = currentAcc;
-        
-        _frontRight.brakeTorque = currentBrake;
-        _frontLeft.brakeTorque = currentBrake;
-        _backRight.brakeTorque = currentBrake;
-        _backLeft.brakeTorque = currentBrake;
+        _rb.AddForce(_rb.transform.forward * (currentAcc - currentBrake), ForceMode.Acceleration);
 
         currentTurnAngle = maxTurnAngle * RotationInput;
         _frontLeft.steerAngle = currentTurnAngle;
@@ -78,6 +70,22 @@ public class ChariotController : MonoBehaviour, IControllable
     public void OnLeftButton() {
         StartCoroutine(ResetLeftBoolCoroutine());
     }
+
+    private void UpdateConfig() {
+        maxTurnAngle = config.SteerAngle;
+        rushForce = config.RushForce;
+        _rb.linearDamping = config.Friction;
+        a = config.MaxSpeed * config.Friction;
+        brakeForce = config.BrakeFactor * a;
+        
+        WheelFrictionCurve curve = _backLeft.sidewaysFriction;
+        curve.stiffness = config.DriftFactor;
+        _backLeft.sidewaysFriction = curve;
+        
+        WheelFrictionCurve friction = _backRight.sidewaysFriction;
+        friction.stiffness = config.DriftFactor;
+        _backRight.sidewaysFriction = friction;
+    }
     
     private IEnumerator ResetRightBoolCoroutine() {
         _rightRushInput = true;
@@ -90,4 +98,24 @@ public class ChariotController : MonoBehaviour, IControllable
         yield return new WaitForSeconds(0.2f);
         _leftRushInput = false;
     }
+    
+#if UNITY_EDITOR
+    private void OnGUI() {
+        GUIStyle style = new GUIStyle(GUIStyle.none) {
+            fontSize = 24,
+            normal = {
+                textColor = Color.green
+            },
+            
+        };
+        GUI.Label(new Rect(10, 10, 300, 20), $"Linear speed : {_rb.linearVelocity.magnitude:F1}", style);
+        GUI.Label(new Rect(10, 40, 300, 20), $"Time : {Time.time - 0.8f:F}", style);
+    }
+
+    private void OnDrawGizmos() {
+        if (Application.isPlaying) {
+            Gizmos.DrawLine(_rb.transform.position, _rb.transform.position + _rb.linearVelocity * 2.0f);
+        }
+    }
+#endif
 }
