@@ -726,7 +726,7 @@ MonoBehaviour:
   _minAxisPower: 0.5
   _steerStrength: 0.4
   _errorInterval: 2
-  _maxErrorAngle: 0.1
+  _maxErrorAngle: 0.05
 --- !u!114 &2180210550937768490
 MonoBehaviour:
   m_ObjectHideFlags: 0
