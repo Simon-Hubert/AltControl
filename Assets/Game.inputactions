@@ -57,6 +57,17 @@
                 },
                 {
                     "name": "",
+                    "id": "903a487b-20de-4b69-9e51-017950310f6a",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightBrake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "a20929e2-5c70-40ea-a8b5-1112f18d0762",
                     "path": "<Keyboard>/s",
                     "interactions": "",
