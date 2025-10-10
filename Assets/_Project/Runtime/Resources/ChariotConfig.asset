@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: ChariotConfig
   m_EditorClassIdentifier: 
   MaxSpeed: 40
+  MaxBackSpeed: 10
   BrakeFactor: 1.2
   SteerAngle: 20
   RushForce: 30
