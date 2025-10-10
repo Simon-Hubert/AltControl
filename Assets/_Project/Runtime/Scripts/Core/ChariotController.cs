@@ -40,7 +40,6 @@ public class ChariotController : MonoBehaviour, IControllable
     }
 
     private void FixedUpdate() {
-
         currentBrake = brakeCurve.Evaluate(BrakeInput) * brakeForce;
 
         if (RushInput) {
