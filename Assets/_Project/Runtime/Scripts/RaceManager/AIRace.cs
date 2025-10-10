@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Splines;
 
-[RequireComponent(typeof(SplineComponent))]
+[RequireComponent(typeof(SplineContainer))]
 public class AIRace : RaceManager
 {
     [SerializeField] GameObject _aiPrefab;
