@@ -38,6 +38,8 @@ public class Racer : MonoBehaviour
         _totalTime = 0;
         _lapsToWin = lapsToWin;
     }
+    
+    public void SetRacerName(string racerName) => _racerName = racerName;
 
     public void UpdateProgress(List<CheckPoint> checkPoints)
     {

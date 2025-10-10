@@ -11,5 +11,6 @@ public class ChariotConfig : ScriptableObject
     public float RushForce;
     [Label("Acceleration")] public float Friction; //Ouais je ment sans vegogne aux GD
     public float DriftFactor;
+    public AnimationCurve BrakeCurve;
 
 }

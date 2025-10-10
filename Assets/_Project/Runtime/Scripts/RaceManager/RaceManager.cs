@@ -2,12 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Splines;
 
 public abstract class RaceManager : MonoBehaviour
 {
     [SerializeField] protected RaceConfig _raceConfig;
     [SerializeField] protected List<CheckPoint> _checkPoints;
     [SerializeField] protected List<Racer> _racers;
+    
+    [SerializeField] protected SplineContainer _raceSpline;
 
     public UnityEvent UnityOnRaceStarted;
     public UnityEvent UnityOnRaceStopped;
@@ -17,6 +20,7 @@ public abstract class RaceManager : MonoBehaviour
     public RaceConfig RaceConfig => _raceConfig;
     public bool RaceStarted => _raceStarted;
     public List<Racer> Racers => _racers;
+    public SplineContainer RaceSpline => _raceSpline;
 
     public virtual void Init(List<CheckPoint> checkpoints = null)
     {
@@ -30,6 +34,9 @@ public abstract class RaceManager : MonoBehaviour
             _checkPoints = FindObjectsOfType<CheckPoint>().OrderBy(c => c.Index).ToList();
 
         }
+        
+        GenerateSplineFromCheckpoints();
+        
         _racers = FindObjectsOfType<Racer>().ToList();
         
         foreach (var r in _racers)
@@ -64,5 +71,28 @@ public abstract class RaceManager : MonoBehaviour
     public List<Racer> GetRankedRacers()
     {
         return _racers.OrderByDescending(r => r.GetRaceProgress()).ToList();
+    }
+
+    void GenerateSplineFromCheckpoints()
+    {
+        if(_checkPoints == null || _checkPoints.Count < 2) return;
+
+        if (_raceSpline == null)
+        {
+            GameObject splineObj = new GameObject("RaceSpline");
+            splineObj.transform.SetParent(transform);
+            _raceSpline = splineObj.AddComponent<SplineContainer>();
+        }
+        
+        _raceSpline.Spline.Clear();
+
+        foreach (CheckPoint pt in _checkPoints)
+        {
+            Vector3 pos = pt.transform.position;
+            Vector3 forward = pt.transform.forward;
+            _raceSpline.Spline.Add(new BezierKnot(pos, forward * 0.5f, -forward * 0.5f));
+        }
+
+        _raceSpline.Spline.Closed = true;
     }
 }
