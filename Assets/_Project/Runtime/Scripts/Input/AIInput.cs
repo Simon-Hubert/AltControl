@@ -1,5 +1,6 @@
 using System;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
 
@@ -10,8 +11,8 @@ public class AIInput : MonoBehaviour
 
     [Header("AI Settings")]
     [SerializeField] private float _speed = 10f;            
-    [SerializeField] private float _lookAheadDistance = .5f;      
-    [SerializeField] private float _correctionAngle = 10f;      
+    [SerializeField] private float _lookAheadOnSpline = 0.05f;      
+    [SerializeField] private float _correctionAngle = 1f;      
     [SerializeField] private float _minAxisPower = 0.5f;        
     [SerializeField] private float _steerStrength = 0.4f;       
     [SerializeField] private float _errorInterval = 2f;      
@@ -22,6 +23,8 @@ public class AIInput : MonoBehaviour
     private float _errorTimer;
     private float _errorOffset;
     private bool _initialized = false;
+
+    private Vector3 _target, _debugPos;
 
     public void Init(SplineContainer track)
     {
@@ -38,16 +41,13 @@ public class AIInput : MonoBehaviour
         if (!_initialized || _track == null)
             return;
         
-        _progress += (Time.deltaTime * _speed) / _splineLength;
-        if (_progress > 1f)
-            _progress -= 1f;
+        Vector3 splinePos = _track.transform.InverseTransformPoint(transform.position);
+        SplineUtility.GetNearestPoint(_track.Spline, splinePos, out float3 nearest, out float t);
         
-        _track.Evaluate(_progress, out float3 pos, out _, out _);
+        float3 worldnearestpoint = _track.EvaluatePosition(t);
         
-        float lookAheadT = Mathf.Clamp01(_progress + (_lookAheadDistance / _splineLength));
-        _track.Evaluate(lookAheadT, out float3 aheadPos, out _, out _);
-        
-        Vector3 targetDir = ((Vector3)(aheadPos - pos)).normalized;
+        _track.Evaluate(t + _lookAheadOnSpline, out float3 worldtargetPoint, out float3 worldTargetTan, out float3 worldTargetUp);
+        Vector3 normale = Vector3.Cross(worldTargetTan, worldTargetUp);
         
         _errorTimer += Time.deltaTime;
         if (_errorTimer >= _errorInterval)
@@ -55,7 +55,15 @@ public class AIInput : MonoBehaviour
             _errorOffset = UnityEngine.Random.Range(-_maxErrorAngle, _maxErrorAngle);
             _errorTimer = 0f;
         }
-        targetDir = Quaternion.Euler(0, _errorOffset, 0) * targetDir;
+        
+        _debugPos = new Vector3(worldnearestpoint.x, worldnearestpoint.y, worldnearestpoint.z);
+        _target = new Vector3(worldtargetPoint.x, worldtargetPoint.y, worldtargetPoint.z);
+        
+        _target += normale * _errorOffset;
+        
+        Vector3 targetDir = ((Vector3)(_target - _debugPos)).normalized;
+        
+       targetDir = Quaternion.Euler(0, _errorOffset, 0) * targetDir;
         
         Vector3 forward = transform.forward;
         float angleDelta = Vector3.SignedAngle(forward, targetDir, Vector3.up);
@@ -75,5 +83,11 @@ public class AIInput : MonoBehaviour
             _controllable.OnLeftAxis(0f);
             _controllable.OnRightAxis(0f);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(new Vector3(_debugPos.x, _debugPos.y, _debugPos.z), 1);
+        Gizmos.DrawWireSphere(new Vector3(_target.x, _target.y, _target.z), 1);
     }
 }

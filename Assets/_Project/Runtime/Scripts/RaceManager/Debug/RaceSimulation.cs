@@ -26,14 +26,14 @@ public class RaceSimulation : MonoBehaviour
         _racemanager.StartRace();
     }
 
-    /*void Update()
+    void Update()
     {
         if (_raceFinished || !_racemanager.RaceStarted) return;
 
         // Update chaque racer
         foreach (var r in _racers)
         {
-            r.SimulateMovement(Time.deltaTime);
+            //r.SimulateMovement(Time.deltaTime);
             r.UpdateProgress(_checkpoints);
 
             // Fin de course ?
@@ -48,11 +48,9 @@ public class RaceSimulation : MonoBehaviour
         // Affichage debug du classement temps réel
         if (Time.frameCount % 30 == 0) // toutes les 0.5s environ
         {
-            var ordered = _racers.OrderByDescending(r => r.GetRaceProgress()).ToList();
-            string ranking = string.Join(" > ", ordered.Select(r => r.name));
-            Debug.Log($"Classement: {ranking}");
+            _racemanager.UpdateRace();
         }
-    }*/
+    }
 
     // --- Génération des checkpoints en cercle ---
     private void GenerateTrack()
@@ -63,6 +61,7 @@ public class RaceSimulation : MonoBehaviour
             Vector3 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * trackRadius;
             GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             SphereCollider sc = go.GetComponent<SphereCollider>();
+            go.transform.localScale = Vector3.one * 3;
             sc.isTrigger = true;
             go.transform.position = pos;
             go.transform.localScale = Vector3.one * checkpointRadius;

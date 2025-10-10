@@ -28,8 +28,8 @@ public class AIRace : RaceManager
             GameObject go = Instantiate(_aiPrefab, spawnPos, Quaternion.LookRotation(forwardDir, Vector3.up));
             go.name = $"Racer_{i + 1}";
             go.transform.position = _checkPoints[0].transform.position + new Vector3(i * 2, 0, 0);
-            Racer racer = go.GetComponent<Racer>();
-            racer.name = $"Racer_{i + 1}";
+            Racer racer = go.GetComponentInChildren<Racer>();
+            racer.SetRacerName($"Racer_{i + 1}");
             //float randomSpeed = Random.Range(racerSpeedMin, racerSpeedMax);
             AIInput input = go.GetComponentInChildren<AIInput>();
             racer.Init(_checkPoints, _raceConfig.Laps);
