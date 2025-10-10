@@ -14,4 +14,7 @@ public class ChariotConfig : ScriptableObject
     public float DriftFactor;
     public AnimationCurve BrakeCurve;
 
+    public float SideForce;
+    public float SideForceTime;
+    public AnimationCurve SideForceCurve;
 }

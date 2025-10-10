@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.Android.Gradle;
 using UnityEngine;
 
 public class ChariotController : MonoBehaviour, IControllable
@@ -15,10 +16,16 @@ public class ChariotController : MonoBehaviour, IControllable
     private float maxTurnAngle;
     private float rushForce;
     private AnimationCurve brakeCurve;
+    
+    private float sideForce;
+    private float sideForceMaxTime;
+    private AnimationCurve sideForceCurve;
+    private float sfT;
 
     private float currentAcc;
     private float currentBrake;
     private float currentTurnAngle;
+    private float currentSideForce;
     
     private float _rightAxisInput;
     private float _leftAxisInput;
@@ -57,11 +64,22 @@ public class ChariotController : MonoBehaviour, IControllable
             _rb.AddForce(_rb.transform.forward * (currentAcc - currentBrake), ForceMode.Acceleration);
         }
 
+        if (Mathf.Abs(RotationInput) > 0.3) {
+            sfT += Time.fixedDeltaTime;
+            float p = Mathf.Min(sfT / sideForceMaxTime, 1);
+            p = sideForceCurve.Evaluate(p);
+            currentSideForce = (Mathf.Sign(RotationInput) * sideForce * p);
+            _rb.AddForce(_rb.transform.right * (Mathf.Sign(RotationInput) * sideForce * p));
+        }
+        else {
+            sfT = 0f;
+        }
+
         currentTurnAngle = maxTurnAngle * RotationInput;
         _frontLeft.steerAngle = currentTurnAngle;
         _frontRight.steerAngle = currentTurnAngle;
     }
-    
+
 
     public void OnRightAxis(float value) {
         _rightAxisInput = value;
@@ -84,6 +102,10 @@ public class ChariotController : MonoBehaviour, IControllable
         maxTurnAngle = config.SteerAngle;
         rushForce = config.RushForce;
         _rb.linearDamping = config.Friction;
+
+        sideForce = config.SideForce;
+        sideForceMaxTime = config.SideForceTime;
+        sideForceCurve = config.SideForceCurve;
         
         a = config.MaxSpeed * config.Friction;
         backAccel = -config.MaxBackSpeed * config.Friction;
@@ -121,6 +143,7 @@ public class ChariotController : MonoBehaviour, IControllable
         };
         GUI.Label(new Rect(10, 10, 300, 20), $"Linear speed : {_rb.linearVelocity.magnitude:F1}", style);
         GUI.Label(new Rect(10, 40, 300, 20), $"Time : {Time.time - 0.8f:F}", style);
+        GUI.Label(new Rect(10, 70, 300, 20), $"SideForce : {currentSideForce:F}", style);
     }
 
     private void OnDrawGizmos() {
