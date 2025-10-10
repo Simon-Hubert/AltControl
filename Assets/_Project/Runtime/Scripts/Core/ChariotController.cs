@@ -13,6 +13,7 @@ public class ChariotController : MonoBehaviour, IControllable
     private float brakeForce;
     private float maxTurnAngle;
     private float rushForce;
+    private AnimationCurve brakeCurve;
 
     private float currentAcc;
     private float currentBrake;
@@ -39,7 +40,8 @@ public class ChariotController : MonoBehaviour, IControllable
     }
 
     private void FixedUpdate() {
-        currentBrake = BrakeInput * brakeForce;
+
+        currentBrake = brakeCurve.Evaluate(BrakeInput) * brakeForce;
 
         if (RushInput) {
             _rb.AddForce(_rb.transform.forward * rushForce, ForceMode.VelocityChange);
@@ -72,6 +74,7 @@ public class ChariotController : MonoBehaviour, IControllable
     }
 
     private void UpdateConfig() {
+        brakeCurve = config.BrakeCurve;
         maxTurnAngle = config.SteerAngle;
         rushForce = config.RushForce;
         _rb.linearDamping = config.Friction;
