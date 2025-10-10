@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxSpeed: 40
   BrakeFactor: 1.5
-  SteerAngle: 20
-  RushForce: 20
+  SteerAngle: 40
+  RushForce: 25
   Friction: 0.2
-  DriftFactor: 4
+  DriftFactor: 3
   BrakeCurve:
     serializedVersion: 2
     m_Curve:
@@ -30,6 +30,15 @@ MonoBehaviour:
       weightedMode: 0
       inWeight: 0
       outWeight: 0
+    - serializedVersion: 3
+      time: 0.6112472
+      value: 0.18870449
+      inSlope: 0.74299634
+      outSlope: 0.74299634
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.25701565
+      outWeight: 0.54607403
     - serializedVersion: 3
       time: 1
       value: 1
