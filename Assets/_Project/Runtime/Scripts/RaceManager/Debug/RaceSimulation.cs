@@ -26,7 +26,7 @@ public class RaceSimulation : MonoBehaviour
         _racemanager.StartRace();
     }
 
-    void Update()
+    /*void Update()
     {
         if (_raceFinished || !_racemanager.RaceStarted) return;
 
@@ -52,7 +52,7 @@ public class RaceSimulation : MonoBehaviour
             string ranking = string.Join(" > ", ordered.Select(r => r.name));
             Debug.Log($"Classement: {ranking}");
         }
-    }
+    }*/
 
     // --- Génération des checkpoints en cercle ---
     private void GenerateTrack()
@@ -62,6 +62,8 @@ public class RaceSimulation : MonoBehaviour
             float angle = i * Mathf.PI * 2f / checkpointCount;
             Vector3 pos = new Vector3(Mathf.Cos(angle), 0, Mathf.Sin(angle)) * trackRadius;
             GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            SphereCollider sc = go.GetComponent<SphereCollider>();
+            sc.isTrigger = true;
             go.transform.position = pos;
             go.transform.localScale = Vector3.one * checkpointRadius;
             go.name = $"Checkpoint_{i}";
