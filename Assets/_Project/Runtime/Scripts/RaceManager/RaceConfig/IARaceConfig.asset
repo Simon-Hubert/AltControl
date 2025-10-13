@@ -17,4 +17,4 @@ MonoBehaviour:
   AllowPlayers: 1
   EnableDestruction: 0
   TimeLimit: 0
-  Racers: 2
+  Racers: 12

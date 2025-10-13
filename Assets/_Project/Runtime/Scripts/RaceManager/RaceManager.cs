@@ -8,7 +8,7 @@ public abstract class RaceManager : MonoBehaviour
 {
     [SerializeField] protected RaceConfig _raceConfig;
     [SerializeField] protected List<CheckPoint> _checkPoints;
-    [SerializeField] protected List<Racer> _racers;
+    [SerializeField] protected List<Transform> _spawns;
     
     [SerializeField] protected SplineContainer _raceSpline;
 
@@ -16,6 +16,7 @@ public abstract class RaceManager : MonoBehaviour
     public UnityEvent UnityOnRaceStopped;
 
     protected bool _raceStarted, _raceFinished;
+    protected List<Racer> _racers;
     
     public RaceConfig RaceConfig => _raceConfig;
     public bool RaceStarted => _raceStarted;
