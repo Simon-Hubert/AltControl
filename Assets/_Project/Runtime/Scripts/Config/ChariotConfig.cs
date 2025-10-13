@@ -17,4 +17,8 @@ public class ChariotConfig : ScriptableObject
     public float SideForce;
     public float SideForceTime;
     public AnimationCurve SideForceCurve;
+
+    [Header("Collisions")] 
+    public float RespawnForce;
+    
 }
