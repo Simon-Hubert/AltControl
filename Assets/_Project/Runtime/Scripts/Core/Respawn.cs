@@ -24,29 +24,9 @@ public class Respawn : MonoBehaviour
     }
     
     private void RespawnChar() {
-        Chariot oldChariot = GetComponent<Chariot>();
-        bool player = oldChariot.UnPossess();
-        Chariot newChariot = Instantiate(_chariotPrefab).GetComponent<Chariot>();
-        newChariot.RacerId = oldChariot.RacerId;
-        oldChariot.RacerId = -1;
-        
-        if (player) {
-            newChariot.Possess<PlayerInput>();
-        }
-        else {
-            newChariot.Possess<AIInput>();
-        }
-
-        if (_spawnPoint == null) {
-            newChariot.transform.position = transform.position + transform.forward * -15f + transform.up;
-            newChariot.transform.rotation = transform.rotation;
-        }
-        else {
-            newChariot.transform.position = _spawnPoint.position;
-            newChariot.transform.rotation = _spawnPoint.rotation;
-        }
-        
-        Destroy(this);
+        Instantiate(_chariotPrefab, transform.position, transform.rotation);
+        transform.position = _spawnPoint.position;
+        transform.rotation = _spawnPoint.rotation;
     }
 
     IEnumerator RespawnRoutine() {
