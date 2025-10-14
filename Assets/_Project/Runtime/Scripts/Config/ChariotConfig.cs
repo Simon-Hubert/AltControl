@@ -20,5 +20,6 @@ public class ChariotConfig : ScriptableObject
 
     [Header("Collisions")] 
     public float RespawnForce;
-    
+    public float RespawnInvincibilityTime;
+
 }

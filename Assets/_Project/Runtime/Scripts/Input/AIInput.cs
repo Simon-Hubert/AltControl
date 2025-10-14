@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
 
-public class AIInput : MonoBehaviour
+public class AIInput : Input
 {
     private IControllable _controllable;
     private SplineContainer _track;
