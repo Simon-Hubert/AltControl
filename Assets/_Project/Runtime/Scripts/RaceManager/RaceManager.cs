@@ -10,7 +10,7 @@ public abstract class RaceManager : MonoBehaviour
     [SerializeField] protected List<CheckPoint> _checkPoints;
     [SerializeField] protected List<Transform> _spawns;
     
-    [SerializeField] protected SplineContainer _raceSpline;
+    //[SerializeField] protected SplineContainer _raceSpline;
 
     public UnityEvent UnityOnRaceStarted;
     public UnityEvent UnityOnRaceStopped;
@@ -21,7 +21,7 @@ public abstract class RaceManager : MonoBehaviour
     public RaceConfig RaceConfig => _raceConfig;
     public bool RaceStarted => _raceStarted;
     public List<Racer> Racers => _racers;
-    public SplineContainer RaceSpline => _raceSpline;
+    //public SplineContainer RaceSpline => _raceSpline;
 
     public virtual void Init(List<CheckPoint> checkpoints = null)
     {
@@ -36,7 +36,7 @@ public abstract class RaceManager : MonoBehaviour
 
         }
         
-        GenerateSplineFromCheckpoints();
+        //GenerateSplineFromCheckpoints();
         
         _racers = FindObjectsOfType<Racer>().ToList();
         
@@ -74,7 +74,7 @@ public abstract class RaceManager : MonoBehaviour
         return _racers.OrderByDescending(r => r.GetRaceProgress()).ToList();
     }
 
-    void GenerateSplineFromCheckpoints()
+    /*void GenerateSplineFromCheckpoints()
     {
         if(_checkPoints == null || _checkPoints.Count < 2) return;
 
@@ -95,5 +95,5 @@ public abstract class RaceManager : MonoBehaviour
         }
 
         _raceSpline.Spline.Closed = true;
-    }
+    }*/
 }

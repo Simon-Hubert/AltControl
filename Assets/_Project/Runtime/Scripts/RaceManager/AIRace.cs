@@ -39,7 +39,7 @@ public class AIRace : RaceManager
             //float randomSpeed = Random.Range(racerSpeedMin, racerSpeedMax);
             AIInput input = go.GetComponentInChildren<AIInput>();
             racer.Init(_checkPoints, _raceConfig.Laps);
-            input.Init(_raceSpline);
+            input.Init(/*_raceSpline*/);
             //racer.InitSimulation(_checkPoints, _raceConfig.Laps, 15);
 
             _racers.Add(racer);
