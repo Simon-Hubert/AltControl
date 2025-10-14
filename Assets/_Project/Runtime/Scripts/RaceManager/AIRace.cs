@@ -4,12 +4,21 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Splines;
 
-[RequireComponent(typeof(SplineComponent))]
+[RequireComponent(typeof(SplineContainer))]
 public class AIRace : RaceManager
 {
     [SerializeField] GameObject _aiPrefab;
     [SerializeField] private float _spawnSpacing = 2f;
     [SerializeField] private float _lateralSpacing = 1.5f;
+    [SerializeField] private bool isTest = false;
+
+    private void Start()
+    {
+        if (!isTest)
+        {
+            Init();
+        }
+    }
 
     public override void Init(List<CheckPoint> checkpoints = null)
     {
@@ -40,6 +49,31 @@ public class AIRace : RaceManager
         }
 
     }
+    void Update()
+    {
+        if (_raceFinished || !RaceStarted) return;
+
+        // Update chaque racer
+        foreach (var r in _racers)
+        {
+            //r.SimulateMovement(Time.deltaTime);
+            r.UpdateProgress(_checkPoints);
+
+            // Fin de course ?
+            if (_racers.All(x => x.HasFinished))
+            {
+                _raceFinished = true;
+                DisplayFinalRanking();
+                break;
+            }
+        }
+
+        // Affichage debug du classement temps réel
+        if (Time.frameCount % 30 == 0) // toutes les 0.5s environ
+        {
+            UpdateRace();
+        }
+    }
 
     public override void UpdateRace()
     {
@@ -67,5 +101,15 @@ public class AIRace : RaceManager
         List<Racer> ordered = GetRankedRacers();
         Racer winner = ordered.First();
         Debug.Log($"Winner is {winner.RacerName}");
+    }
+    
+    private void DisplayFinalRanking()
+    {
+        var ordered = _racers.OrderByDescending(r => r.GetRaceProgress()).ThenBy(r => r.TotalTime).ToList();
+        Debug.Log("🏆 COURSE TERMINÉE !");
+        for (int i = 0; i < ordered.Count; i++)
+        {
+            Debug.Log($"{i + 1}. {ordered[i].name} — {ordered[i].TotalTime:F2}s");
+        }
     }
 }
