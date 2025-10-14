@@ -26,13 +26,16 @@ public class Racer : MonoBehaviour
     public float TotalTime => _totalTime;
     public float DistToNextCheckpoint => _distToNextCheckpoint;
     public string RacerName => _racerName;
+    public CheckPoint NextCheckpoint => _nextCheckpoint;
+    public CheckPoint CurrentCheckpoint => _checkpoints[_lastCheckpointIndex];
+    public List<CheckPoint> Checkpoints => _checkpoints;
 
     public void Init(List<CheckPoint> checkPoints, int lapsToWin)
     {
         _checkpoints = checkPoints;
-        _nextCheckpoint = _checkpoints[0];
+        _nextCheckpoint = _checkpoints[1];
         _currentLap = 0;
-        _lastCheckpointIndex = -1;
+        _lastCheckpointIndex = 0;
         _hasFinished = false;
         _isAlive = true;
         _totalTime = 0;
