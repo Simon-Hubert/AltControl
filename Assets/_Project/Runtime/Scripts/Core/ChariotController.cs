@@ -68,7 +68,7 @@ public class ChariotController : MonoBehaviour, IControllable
             float p = Mathf.Min(sfT / sideForceMaxTime, 1);
             p = sideForceCurve.Evaluate(p);
             currentSideForce = (Mathf.Sign(RotationInput) * sideForce * p);
-            _rb.AddForce(_rb.transform.right * (Mathf.Sign(RotationInput) * sideForce * p));
+            _rb.AddForce(_rb.transform.right * (Mathf.Sign(RotationInput) * sideForce * p), ForceMode.Acceleration);
         }
         else {
             sfT = 0f;

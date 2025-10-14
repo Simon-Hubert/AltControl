@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,7 +14,6 @@ public class CollisionManager : MonoBehaviour
     public event Action<Vector3> OnCollide;
 
     private void OnEnable() {
-        
         collisionControllers = GetComponentsInChildren<CollisionController>();
         foreach (CollisionController controller in collisionControllers) {
             controller.OnRespawn += Respawn;

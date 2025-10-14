@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Racer : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class Racer : MonoBehaviour
     public CheckPoint CurrentCheckpoint => _checkpoints[_lastCheckpointIndex];
     public List<CheckPoint> Checkpoints => _checkpoints;
 
+    [SerializeField] private UnityEvent<CheckPoint> _onCheckPointPassed;
+
     public void Init(List<CheckPoint> checkPoints, int lapsToWin)
     {
         _checkpoints = checkPoints;
@@ -57,6 +60,7 @@ public class Racer : MonoBehaviour
 
     public void OnCheckPointPassed(CheckPoint checkPoint)
     {
+        _onCheckPointPassed?.Invoke(checkPoint);
         if(_hasFinished) return;
         
         int expectedIndex = (_lastCheckpointIndex + 1) % _checkpoints.Count;

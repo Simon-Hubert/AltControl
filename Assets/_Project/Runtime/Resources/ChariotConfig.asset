@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f198092b1d32e774a98070471d55cecd, type: 3}
   m_Name: ChariotConfig
   m_EditorClassIdentifier: 
-  MaxSpeed: 40
-  MaxBackSpeed: 0
+  MaxSpeed: 60
+  MaxBackSpeed: 10
   BrakeFactor: 1.5
   SteerAngle: 40
   RushForce: 25
@@ -52,7 +52,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  SideForce: 100
+  SideForce: 20
   SideForceTime: 2
   SideForceCurve:
     serializedVersion: 2
@@ -78,5 +78,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  RespawnForce: 10
-  RespawnInvincibilityTime: 1
+  RespawnForce: 5
+  RespawnInvincibilityTime: 2

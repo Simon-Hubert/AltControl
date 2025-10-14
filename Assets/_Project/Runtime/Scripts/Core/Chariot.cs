@@ -17,7 +17,6 @@ public class Chariot : MonoBehaviour
 
     private void Start() {
         _input = GetComponent<Input>();
-        StartCoroutine(RespawnInvincibility());
     }
 
     public void Possess<T>() where T : Input {
@@ -34,11 +33,5 @@ public class Chariot : MonoBehaviour
         return isPlayer;
     }   
 
-    IEnumerator RespawnInvincibility() {
-        CollisionManager collisions = GetComponent<CollisionManager>();
-        collisions.enabled = false;
-        float t = Resources.Load<ChariotConfig>("ChariotConfig").RespawnInvincibilityTime;
-        yield return new WaitForSeconds(t);
-        collisions.enabled = true;
-    }
+    
 }
