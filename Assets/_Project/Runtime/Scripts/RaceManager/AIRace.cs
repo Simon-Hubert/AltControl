@@ -10,6 +10,7 @@ public class AIRace : RaceManager
 {
     [SerializeField] GameObject _aiPrefab;
     [SerializeField] private bool isTest = false;
+    [SerializeField] public IAConfig _config;
 
     private void Start()
     {
@@ -34,15 +35,20 @@ public class AIRace : RaceManager
             spawns.Remove(spawn);
             
             go.name = $"Racer_{i + 1}";
-            Racer racer = go.GetComponentInChildren<Racer>();
+            Racer racer = new Racer();
+            _racers.Add(racer);
+            Chariot chariot = go.GetComponent<Chariot>();
+            chariot.RacerId = i;
             racer.SetRacerName($"Racer_{i + 1}");
             //float randomSpeed = Random.Range(racerSpeedMin, racerSpeedMax);
-            AIInput input = go.GetComponentInChildren<AIInput>();
-            racer.Init(_checkPoints, _raceConfig.Laps);
-            input.Init(/*_raceSpline*/);
+            chariot.Possess<AIInput>(i);
+            AIInput input = go.GetComponent<AIInput>();
+            racer.Init(_checkPoints, _raceConfig.Laps, chariot.MovingTransform);
+            input.Init(racer/*_raceSpline*/, chariot.MovingTransform, _config);
             //racer.InitSimulation(_checkPoints, _raceConfig.Laps, 15);
 
-            _racers.Add(racer);
+            _raceStarted = true;
+            _raceFinished = false;
         }
 
     }
@@ -54,7 +60,7 @@ public class AIRace : RaceManager
         foreach (var r in _racers)
         {
             //r.SimulateMovement(Time.deltaTime);
-            r.UpdateProgress(_checkPoints);
+            r.UpdateProgress();
 
             // Fin de course ?
             if (_racers.All(x => x.HasFinished))
@@ -78,7 +84,7 @@ public class AIRace : RaceManager
 
         foreach (Racer racer in _racers)
         {
-            racer.UpdateProgress(_checkPoints);
+            racer.UpdateProgress();
             if (racer.HasFinished)
             {
                 StopRace();

@@ -11,7 +11,7 @@ public class CheckPoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Racer racer = other.GetComponent<Racer>();
+        Chariot racer = other.GetComponentInParent<Chariot>();
         if (racer != null)
         {
             racer.OnCheckPointPassed(this);

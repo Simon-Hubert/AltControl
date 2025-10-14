@@ -5460,14 +5460,13 @@ MonoBehaviour:
   - {fileID: 1379834839}
   - {fileID: 1074931180}
   - {fileID: 393240375}
-  _raceSpline: {fileID: 924866556}
   UnityOnRaceStarted:
     m_PersistentCalls:
       m_Calls: []
   UnityOnRaceStopped:
     m_PersistentCalls:
       m_Calls: []
-  _aiPrefab: {fileID: 2848634420223314999, guid: 3f96cf7dd0246094a8046dcbb1a4ef4a, type: 3}
+  _aiPrefab: {fileID: 8154565918595698629, guid: 300e971ceb05bcd4290a6680903a4fa9, type: 3}
   isTest: 0
 --- !u!114 &924866556
 MonoBehaviour:

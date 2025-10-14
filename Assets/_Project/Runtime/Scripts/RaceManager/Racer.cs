@@ -10,27 +10,28 @@ public class Racer : MonoBehaviour
     int _currentLap; 
     int _lastCheckpointIndex;
     private int _lapsToWin;
-    float _totalTime;
     private float _distToNextCheckpoint = float.MaxValue;
     private float _speed; //debug
     private Vector3 _targetPos; //debug
     
     private CheckPoint _nextCheckpoint;
     private List<CheckPoint> _checkpoints;
+    private Transform _transform;
 
     public bool HasFinished => _hasFinished;
     public bool IsAlive => _isAlive;
     public int CurrentLap => _currentLap;
     public int LastCheckpointIndex => _lastCheckpointIndex;
     public int LapsToWin => _lapsToWin;
-    public float TotalTime => _totalTime;
     public float DistToNextCheckpoint => _distToNextCheckpoint;
     public string RacerName => _racerName;
     public CheckPoint NextCheckpoint => _nextCheckpoint;
     public CheckPoint CurrentCheckpoint => _checkpoints[_lastCheckpointIndex];
     public List<CheckPoint> Checkpoints => _checkpoints;
+    
+    public float TotalTime { get; set; }
 
-    public void Init(List<CheckPoint> checkPoints, int lapsToWin)
+    public void Init(List<CheckPoint> checkPoints, int lapsToWin, Transform transform)
     {
         _checkpoints = checkPoints;
         _nextCheckpoint = _checkpoints[1];
@@ -38,49 +39,32 @@ public class Racer : MonoBehaviour
         _lastCheckpointIndex = 0;
         _hasFinished = false;
         _isAlive = true;
-        _totalTime = 0;
         _lapsToWin = lapsToWin;
+        _transform = transform;
     }
     
     public void SetRacerName(string racerName) => _racerName = racerName;
+    public void UpdateDistToNextCheckpoint(float newDist) => _distToNextCheckpoint = newDist;
+    public void UpdateLastCheckpointIndex(int newIndex) => _lastCheckpointIndex = newIndex;
 
-    public void UpdateProgress(List<CheckPoint> checkPoints)
+    public void UpdateNextCheckpoint()
     {
-        if (_hasFinished) return;
-
-        _totalTime += Time.deltaTime;
-        if (_nextCheckpoint != null)
+        int nextIndex = (_lastCheckpointIndex + 1) % _checkpoints.Count;
+        _nextCheckpoint = _checkpoints[nextIndex];
+    }
+    public void UpdateCurrentLap(int newLap) => _currentLap = newLap;
+    
+    public void UpdateProgress()
+    {
+        if (_nextCheckpoint != null || _transform != null)
         {
-            _distToNextCheckpoint = Vector3.Distance(transform.position, _nextCheckpoint.transform.position);
+            UpdateDistToNextCheckpoint(Vector3.Distance(_transform.position, _nextCheckpoint.transform.position));
         }
     }
 
-    public void OnCheckPointPassed(CheckPoint checkPoint)
+    public void Finish()
     {
-        if(_hasFinished) return;
-        
-        int expectedIndex = (_lastCheckpointIndex + 1) % _checkpoints.Count;
-        if (checkPoint.Index != expectedIndex)
-            return;
-        
-        _lastCheckpointIndex = checkPoint.Index;
-        
-        _lastCheckpointIndex = checkPoint.Index;
-
-        if (checkPoint.IsFinishLine)
-        {
-            _currentLap++;
-
-            if (_currentLap >= _lapsToWin)
-            {
-                _hasFinished = true;
-                Debug.Log($"{_racerName} finished the race in {_totalTime:F2}s !");
-                return;
-            }
-        }
-
-        int nextIndex = (_lastCheckpointIndex + 1) % _checkpoints.Count;
-        _nextCheckpoint = _checkpoints[nextIndex];
+        _hasFinished = true;
     }
 
     public float GetRaceProgress()
@@ -100,14 +84,14 @@ public class Racer : MonoBehaviour
         return progress;
     }
     
-    public void InitSimulation(List<CheckPoint> checkPoints, int lapsToWin, float speed)
+    /*public void InitSimulation(List<CheckPoint> checkPoints, int lapsToWin, float speed)
     {
         Init(checkPoints, lapsToWin);
         _speed = speed;
         _targetPos = _checkpoints[0].transform.position;
-    }
+    }*/
 
-    public void SimulateMovement(float deltaTime)
+    /*public void SimulateMovement(float deltaTime)
     {
         if (_hasFinished) return;
 
@@ -125,5 +109,5 @@ public class Racer : MonoBehaviour
                 OnCheckPointPassed(_nextCheckpoint);
             }
         }
-    }
+    }*/
 }

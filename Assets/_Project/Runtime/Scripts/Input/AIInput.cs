@@ -18,13 +18,13 @@ public class AIInput : MonoBehaviour
     [SerializeField, Range(0.1f, 5f)] private float _steerSensitivity = 1f; 
     [SerializeField, Range(0.1f, 45f)] private float _maxSteerAngle = 30f;
     [SerializeField] private float _minAxisPower = 0.5f;    
-    [SerializeField] private float _steerStrength = 0.4f; 
+    [SerializeField] private float _steerStrength = 1f; 
     [SerializeField] private float _errorInterval = 2f; 
-    [SerializeField] private float _maxErrorAngle = 5f; 
+    [SerializeField] private float _maxErrorAngle = 0.01f; 
     [SerializeField] private float _lookAhead = 2f;     
 
     [SerializeField] private float _prog = 0f;
-    [SerializeField] private Racer _racer;
+    private Racer _racer;
 
     //private float _splineLength;
     private float _progress;
@@ -32,11 +32,12 @@ public class AIInput : MonoBehaviour
     private float _errorOffset;
     private bool _initialized = false;
     private float _tDelta, _tAI, _offset = 0.005f;
+    private Transform _movingTransform;
 
     private Vector3 _target, /*_debugPos*/ _current, _targetDebug;
     //private float3 _worldTargetTan, _worldTargetPoint, _worldTargetUp, _worldNearestPoint;
 
-    public void Init(/*SplineContainer track*/)
+    public void Init(Racer racer/*SplineContainer track*/, Transform transform, IAConfig config)
     {
         _controllable = GetComponentInParent<IControllable>();
         //_track = track;
@@ -44,6 +45,18 @@ public class AIInput : MonoBehaviour
         _progress = 0f;
         _errorTimer = 0f;
         _initialized = true;
+        _racer = racer;
+        _movingTransform = transform;
+        
+        _speed = config.Speed;
+        _maxSteerAngle = config.MaxSteerAngle;
+        _minAxisPower = config.MinAxisPower;
+        _steerSensitivity = config.SteerSensitivity;
+        _maxErrorAngle = config.MaxErrorAngle;
+        _steerStrength = config.SteerStrength;
+        _errorInterval = config.ErrorInterval;
+        _lookAhead = config.LookAhead;
+        
     }
 
     private void Update()
@@ -88,7 +101,7 @@ public class AIInput : MonoBehaviour
        _target = _racer.NextCheckpoint.transform.position;
        
        //Debug.Log($"current : {_racer.CurrentCheckpoint.Index} next : {_racer.NextCheckpoint.Index}");
-       Vector3 pos = transform.position;
+       Vector3 pos = _movingTransform.position;
        
        float segmentLength = Vector3.Distance(_current, _target);
        float distFromLastChecekPoint = Vector3.Dot((pos - _current), (_target - _current).normalized);
@@ -120,7 +133,7 @@ public class AIInput : MonoBehaviour
         
        //targetDir = Quaternion.Euler(0, _errorOffset, 0) * targetDir;
         
-        Vector3 forward = transform.forward;
+        Vector3 forward = _movingTransform.forward;
         float angleDelta = Vector3.SignedAngle(forward, targetDir, Vector3.up);
         
         float steerFactor = Mathf.Clamp(angleDelta / _maxSteerAngle, -1f, 1f);
@@ -152,16 +165,20 @@ public class AIInput : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_racer == null || _racer.Checkpoints.Count <= 0 || _racer.CurrentCheckpoint == null || _racer.NextCheckpoint == null)
+        if (_racer.Checkpoints.Count <= 0 || _racer.CurrentCheckpoint == null ||
+            _racer.NextCheckpoint == null)
+        {
+            Debug.LogError($"Count : {_racer.Checkpoints.Count} CurrentCheckpoint : {_racer.CurrentCheckpoint != null} NextCheckpoint : {_racer.NextCheckpoint != null} ");
             return;
+        }
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(transform.position, 0.5f);
+        Gizmos.DrawSphere(_movingTransform.position, 0.5f);
 
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(_targetDebug, 0.5f);
 
         Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(transform.position, _targetDebug);
+        Gizmos.DrawLine(_movingTransform.position, _targetDebug);
     }
 }

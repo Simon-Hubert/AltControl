@@ -34,7 +34,7 @@ public class RaceSimulation : MonoBehaviour
         foreach (var r in _racers)
         {
             //r.SimulateMovement(Time.deltaTime);
-            r.UpdateProgress(_checkpoints);
+            //r.UpdateProgress();
 
             // Fin de course ?
             if (_racers.All(x => x.HasFinished))

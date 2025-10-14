@@ -22,9 +22,18 @@ public abstract class RaceManager : MonoBehaviour
     public bool RaceStarted => _raceStarted;
     public List<Racer> Racers => _racers;
     //public SplineContainer RaceSpline => _raceSpline;
+    
+    public static RaceManager instance;
+
+    void Awake()
+    {
+        if(instance == null) instance = this;
+        else Destroy(this);
+    }
 
     public virtual void Init(List<CheckPoint> checkpoints = null)
     {
+        _racers = new List<Racer>();
         if (checkpoints != null)
         {
             _checkPoints = checkpoints;
@@ -38,12 +47,6 @@ public abstract class RaceManager : MonoBehaviour
         
         //GenerateSplineFromCheckpoints();
         
-        _racers = FindObjectsOfType<Racer>().ToList();
-        
-        foreach (var r in _racers)
-            r.Init(_checkPoints, _raceConfig.Laps);
-        _raceStarted = true;
-        _raceFinished = false;
     }
 
     public virtual void StartRace()
