@@ -87,7 +87,7 @@ public class AIInput : MonoBehaviour
        _current = _racer.CurrentCheckpoint.transform.position;
        _target = _racer.NextCheckpoint.transform.position;
        
-       Debug.Log($"current : {_racer.CurrentCheckpoint.Index} next : {_racer.NextCheckpoint.Index}");
+       //Debug.Log($"current : {_racer.CurrentCheckpoint.Index} next : {_racer.NextCheckpoint.Index}");
        Vector3 pos = transform.position;
        
        float segmentLength = Vector3.Distance(_current, _target);
@@ -97,7 +97,6 @@ public class AIInput : MonoBehaviour
        
        float lookT = Mathf.Clamp01(t + _lookAhead / segmentLength);
        Vector3 lookPoint = Vector3.Lerp(_current, _target, lookT);
-       _targetDebug = lookPoint;
        
         //Vector3 normale = Vector3.Cross(_worldTargetTan, _worldTargetUp);
 
@@ -117,7 +116,7 @@ public class AIInput : MonoBehaviour
         //Vector3 targetDir = ((_target - _debugPos)).normalized;
         Vector3 targetDir = (lookPoint - pos).normalized;
         targetDir = Quaternion.Euler(0, _errorOffset, 0) * targetDir;
-
+        _targetDebug = pos + targetDir * 10;
         
        //targetDir = Quaternion.Euler(0, _errorOffset, 0) * targetDir;
         
