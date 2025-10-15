@@ -57,10 +57,11 @@ public class AIRace : RaceManager
         Transform spawn = spawns[^1];
         GameObject go = Instantiate(_playerPrefab, spawn.position, Quaternion.LookRotation(forwardDir, Vector3.up));
         spawns.Remove(spawn);
-            
+        
         go.name = $"Racer_{index + 1}";
         Racer racer = go.GetComponentInChildren<Racer>();
         racer.SetRacerName($"Racer_{index + 1}");
+        racer.Init(_checkPoints, _raceConfig.Laps);
 
         _racers.Add(racer);
     }
