@@ -9,6 +9,7 @@ public class Respawn : MonoBehaviour
     [SerializeField] private Transform _transform;
     [SerializeField] private GameObject _visual;
     [SerializeField] private CollisionManager _collisions;
+    [SerializeField] private Rigidbody _rb;
     
     private Transform _spawnPoint;
     
@@ -34,6 +35,7 @@ public class Respawn : MonoBehaviour
         StartCoroutine(RespawnInvincibility());
         _transform.position = _spawnPoint.position;
         _transform.rotation = _spawnPoint.rotation * Quaternion.Euler(0,90,0);
+        _rb.linearVelocity = Vector3.zero;
     }
 
     public void SetSpawnPoint(CheckPoint cp) {

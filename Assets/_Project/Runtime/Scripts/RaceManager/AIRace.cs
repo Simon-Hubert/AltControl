@@ -11,6 +11,7 @@ public class AIRace : RaceManager
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] GameObject _aiPrefab;
     [SerializeField] private bool isTest = false;
+    [SerializeField] private List<IAConfig> _aiConfigs;
 
     private void Start()
     {
@@ -23,7 +24,10 @@ public class AIRace : RaceManager
     public override void Init(List<CheckPoint> checkpoints = null)
     {
         base.Init(checkpoints);
-        
+        foreach (IAConfig aiConfig in Resources.LoadAll("AIConfigs"))
+        {
+            _aiConfigs.Add(aiConfig);
+        }
         Vector3 startPos = _checkPoints[0].transform.position;
         Vector3 nextPos = _checkPoints[1].transform.position;
         Vector3 forwardDir = (nextPos - startPos).normalized;
@@ -44,11 +48,9 @@ public class AIRace : RaceManager
         go.name = $"Racer_{index + 1}";
         Racer racer = go.GetComponentInChildren<Racer>();
         racer.SetRacerName($"Racer_{index + 1}");
-        //float randomSpeed = Random.Range(racerSpeedMin, racerSpeedMax);
         AIInput input = go.GetComponentInChildren<AIInput>();
         racer.Init(_checkPoints, _raceConfig.Laps);
-        input.Init(/*_raceSpline*/);
-        //racer.InitSimulation(_checkPoints, _raceConfig.Laps, 15);
+        input.Init(_aiConfigs[UnityEngine.Random.Range(0, _aiConfigs.Count)]);
 
         _racers.Add(racer);
     }

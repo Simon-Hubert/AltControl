@@ -403,6 +403,7 @@ MonoBehaviour:
   _transform: {fileID: 9087952612461272695}
   _visual: {fileID: 4943920888704507562}
   _collisions: {fileID: 7214697852458632207}
+  _rb: {fileID: 5527695312049132380}
 --- !u!114 &1030663333691156845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,16 +631,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbac1a67837f62d46baac84c6c985cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
-  _steerSensitivity: 1
-  _maxSteerAngle: 30
-  _minAxisPower: 0.5
-  _steerStrength: 0.4
-  _errorInterval: 2
-  _maxErrorAngle: 5
-  _lookAhead: 2
   _prog: 0
   _racer: {fileID: 7989098111354379334}
+  _rb: {fileID: 5527695312049132380}
 --- !u!1001 &820399963590128368
 PrefabInstance:
   m_ObjectHideFlags: 0

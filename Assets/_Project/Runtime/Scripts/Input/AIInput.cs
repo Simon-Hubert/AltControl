@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using NaughtyAttributes;
 using Unity.Cinemachine;
 using Unity.Mathematics;
@@ -12,82 +13,39 @@ public class AIInput : Input
 {
     private IControllable _controllable;
     private SplineContainer _track;
-
-    [Header("AI Settings")]
-    [SerializeField] private float _speed = 10f;
-    [SerializeField, Range(0.1f, 5f)] private float _steerSensitivity = 1f; 
-    [SerializeField, Range(0.1f, 45f)] private float _maxSteerAngle = 30f;
-    [SerializeField] private float _minAxisPower = 0.5f;    
-    [SerializeField] private float _steerStrength = 0.4f; 
-    [SerializeField] private float _errorInterval = 2f; 
-    [SerializeField] private float _maxErrorAngle = 5f; 
-    [SerializeField] private float _lookAhead = 2f;     
+    private IAConfig _config;
 
     [SerializeField] private float _prog = 0f;
     [SerializeField] private Racer _racer;
-
-    //private float _splineLength;
+    [SerializeField] private Rigidbody _rb;
+    
     private float _progress;
     private float _errorTimer;
     private float _errorOffset;
     private bool _initialized = false;
     private float _tDelta, _tAI, _offset = 0.005f;
 
-    private Vector3 _target, /*_debugPos*/ _current, _targetDebug;
-    //private float3 _worldTargetTan, _worldTargetPoint, _worldTargetUp, _worldNearestPoint;
+    private Vector3 _target, _current, _targetDebug;
 
-    public void Init(/*SplineContainer track*/)
+    private Coroutine _accelCoolDownRoutine;
+
+    public void Init(IAConfig config)
     {
         _controllable = GetComponentInParent<IControllable>();
-        //_track = track;
-        //_splineLength = _track.CalculateLength();
         _progress = 0f;
         _errorTimer = 0f;
+        _config = config;
         _initialized = true;
     }
 
     private void Update()
     {
-        if (!_initialized /*|| _track == null*/)
+        if (!_initialized)
             return;
-        
-        //Vector3 splinePos = _track.transform.InverseTransformPoint(transform.position);
-        //SplineUtility.GetNearestPoint(_track.Spline, splinePos, out float3 nearest, out float t);
-       //if(t >= _tAI && t < _tAI + 0.010)
-       //{
-       //    _tAI = t;
-       //    _worldNearestPoint = _track.EvaluatePosition(t);
-       //}
-       //else if(Mathf.Abs(t - _tAI) > 0.75f)
-       //{
-       //    _tAI = t;
-       //    _worldNearestPoint = _track.EvaluatePosition(t);
-       //}
-       //else
-       //{
-       //    _worldNearestPoint = _track.EvaluatePosition(_tAI);
-       //}
-       //
-       //if (t > _tDelta && t < t + _offset)
-       //{
-       //    _tDelta = t + _offset;
-       //    _track.Evaluate(_tDelta, out _worldTargetPoint, out _worldTargetTan, out _worldTargetUp);
-       //}
-       //else if (Mathf.Abs(t - _tDelta) > 0.75f)
-       //{
-       //    _tDelta = t + _offset;
-       //    _track.Evaluate(_tDelta, out _worldTargetPoint, out _worldTargetTan, out _worldTargetUp);
-       //}
-       //else
-       //{
-       //    _tDelta = _tAI + _offset;
-       //    _track.Evaluate(_tDelta, out _worldTargetPoint, out _worldTargetTan, out _worldTargetUp);
-       //}
 
        _current = _racer.CurrentCheckpoint.transform.position;
        _target = _racer.NextCheckpoint.transform.position;
        
-       //Debug.Log($"current : {_racer.CurrentCheckpoint.Index} next : {_racer.NextCheckpoint.Index}");
        Vector3 pos = transform.position;
        
        float segmentLength = Vector3.Distance(_current, _target);
@@ -95,59 +53,40 @@ public class AIInput : Input
        
        float t = Mathf.Clamp01(distFromLastChecekPoint / segmentLength);
        
-       float lookT = Mathf.Clamp01(t + _lookAhead / segmentLength);
+       float lookT = Mathf.Clamp01(t + _config.LookAhead / segmentLength);
        Vector3 lookPoint = Vector3.Lerp(_current, _target, lookT);
-       
-        //Vector3 normale = Vector3.Cross(_worldTargetTan, _worldTargetUp);
 
         _errorTimer += Time.deltaTime;
-        if (_errorTimer >= _errorInterval)
+        if (_errorTimer >= _config.ErrorInterval)
         {
-            //_offset = UnityEngine.Random.Range(_lookAheadOnSpline.x, _lookAheadOnSpline.y);
-            _errorOffset = UnityEngine.Random.Range(-_maxErrorAngle, _maxErrorAngle);
+            _errorOffset = UnityEngine.Random.Range(-_config.MaxErrorAngle, _config.MaxErrorAngle);
             _errorTimer = 0f;
         }
-
-        //_debugPos = new Vector3(_worldNearestPoint.x, _worldNearestPoint.y, _worldNearestPoint.z);
-        //_target = new Vector3(_worldTargetPoint.x, _worldTargetPoint.y, _worldTargetPoint.z);
         
-        //_target += normale * _errorOffset;
-        
-        //Vector3 targetDir = ((_target - _debugPos)).normalized;
         Vector3 targetDir = (lookPoint - pos).normalized;
         targetDir = Quaternion.Euler(0, _errorOffset, 0) * targetDir;
         _targetDebug = pos + targetDir * 10;
         
-       //targetDir = Quaternion.Euler(0, _errorOffset, 0) * targetDir;
-        
         Vector3 forward = transform.forward;
         float angleDelta = Vector3.SignedAngle(forward, targetDir, Vector3.up);
         
-        float steerFactor = Mathf.Clamp(angleDelta / _maxSteerAngle, -1f, 1f);
-        steerFactor *= _steerSensitivity;
+        float steerFactor = Mathf.Clamp(angleDelta / _config.MaxSteerAngle, -1f, 1f);
+        steerFactor *= _config.SteerSensitivity;
         
-        float left = (_minAxisPower - steerFactor * _steerStrength);
-        float right = (_minAxisPower + steerFactor * _steerStrength);
+        float left = (_config.MinAxisPower - steerFactor * _config.SteerStrength);
+        float right = (_config.MinAxisPower + steerFactor * _config.SteerStrength);
+        float triggerBoost = Vector3.Dot(_racer.CurrentCheckpoint.transform.forward, _racer.NextCheckpoint.transform.forward);
         
+        _rb.AddForce(transform.forward * _config.Boost, ForceMode.Acceleration);
+        
+        if (_config.TriggerBoostLimit < triggerBoost && _accelCoolDownRoutine == null)
+        {
+            _controllable.OnLeftButton();
+            _controllable.OnRightButton();
+            _accelCoolDownRoutine = StartCoroutine(CoolDownAcceleration());
+        }
         _controllable.OnLeftAxis(left);
         _controllable.OnRightAxis(right);
-        
-        /*if (Mathf.Abs(angleDelta) > _correctionAngle)
-        {
-            float steerFactor = Mathf.Clamp(angleDelta / 45f, -1f, 1f);
-            
-            float left = (_minAxisPower - steerFactor * _steerStrength);
-            float right = (_minAxisPower + steerFactor * _steerStrength);
-            
-            _controllable.OnLeftAxis(Mathf.Clamp01(left));
-            _controllable.OnRightAxis(Mathf.Clamp01(right));
-        }
-        else
-        {
-            _controllable.OnLeftAxis(0f);
-            _controllable.OnRightAxis(0f);
-        }*/
-        
     }
 
     private void OnDrawGizmos()
@@ -163,5 +102,11 @@ public class AIInput : Input
 
         Gizmos.color = Color.cyan;
         Gizmos.DrawLine(transform.position, _targetDebug);
+    }
+
+    IEnumerator CoolDownAcceleration()
+    {
+        yield return new WaitForSeconds(_config.CoolDownAccel);
+        _accelCoolDownRoutine = null;
     }
 }
