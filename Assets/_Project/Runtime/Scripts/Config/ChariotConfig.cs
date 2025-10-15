@@ -22,4 +22,6 @@ public class ChariotConfig : ScriptableObject
     public float RespawnForce;
     public float RespawnInvincibilityTime;
 
+    [Header("Animation")]
+    public float MaxAnimationSpeed;
 }

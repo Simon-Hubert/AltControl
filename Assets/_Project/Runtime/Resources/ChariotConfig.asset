@@ -78,5 +78,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  RespawnForce: 5
+  RespawnForce: 70
   RespawnInvincibilityTime: 2
+  MaxAnimationSpeed: 3

@@ -4018,7 +4018,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpriteSheetName: PlacementPLACEHOLDER
-  _image: {fileID: 539884099}
+  _imagePlacement: {fileID: 539884099}
+  _textLap: {fileID: 273771186}
 --- !u!1 &541803692
 GameObject:
   m_ObjectHideFlags: 0
