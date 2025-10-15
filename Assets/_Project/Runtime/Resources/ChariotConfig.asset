@@ -78,5 +78,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  RespawnForce: 5
+  RespawnForce: 75
   RespawnInvincibilityTime: 2
+  WaitForRespawnTime: 1.5
+  RespawnBusTimer: 0.5
