@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -30,6 +31,24 @@ public class Racer : MonoBehaviour
     public CheckPoint NextCheckpoint => _nextCheckpoint;
     public CheckPoint CurrentCheckpoint => _checkpoints[_lastCheckpointIndex];
     public List<CheckPoint> Checkpoints => _checkpoints;
+    private int _placement;
+
+    public int Placement
+    {
+        get => _placement;
+        set
+        {
+            if (value != _placement) {
+                _placement = value;
+                OnPositionChange?.Invoke(value);
+            }
+        }
+    }
+
+    public event Action<int> OnPositionChange;
+    public event Action<int> OnFinishedLap;
+
+    
 
     [SerializeField] private UnityEvent<CheckPoint> _onCheckPointPassed;
 
@@ -74,6 +93,7 @@ public class Racer : MonoBehaviour
         if (checkPoint.IsFinishLine)
         {
             _currentLap++;
+            OnFinishedLap?.Invoke(_currentLap);
 
             if (_currentLap >= _lapsToWin)
             {

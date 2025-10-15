@@ -25,7 +25,6 @@ public class Respawn : MonoBehaviour
     }
 
     private void Update() {
-        Debug.Log(Vector3.Dot(_transform.up, Vector3.up));
         if(Vector3.Dot(_transform.up, Vector3.up) < 0.7) OnRespawn();
     }
 

@@ -12,6 +12,7 @@ public class AIRace : RaceManager
     [SerializeField] GameObject _aiPrefab;
     [SerializeField] private bool isTest = false;
     [SerializeField] private List<IAConfig> _aiConfigs;
+    [SerializeField] private Placement _placementUI;
 
     private void Start()
     {
@@ -66,6 +67,7 @@ public class AIRace : RaceManager
         racer.Init(_checkPoints, _raceConfig.Laps);
 
         _racers.Add(racer);
+        _placementUI.SetRacer(racer);
     }
 
     void Update()
@@ -110,9 +112,10 @@ public class AIRace : RaceManager
         List<Racer> ordered = GetRankedRacers();
         if(ordered.Count > 0)
         {
-            Debug.Log($"Classement actuel: {string.Join(", ", ordered.Select(r => r.RacerName))}");
+            for (int i = 0; i < ordered.Count; i++) {
+                ordered[i].Placement = i;
+            }
         }
-
     }
     
     public override void CheckWinCondition()
