@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Splines;
+using Random = System.Random;
 
 [RequireComponent(typeof(SplineContainer))]
 public class AIRace : RaceManager
 {
+    [SerializeField] private GameObject _playerPrefab;
     [SerializeField] GameObject _aiPrefab;
-    [SerializeField] private float _spawnSpacing = 2f;
-    [SerializeField] private float _lateralSpacing = 1.5f;
     [SerializeField] private bool isTest = false;
 
     private void Start()
@@ -27,28 +27,45 @@ public class AIRace : RaceManager
         Vector3 startPos = _checkPoints[0].transform.position;
         Vector3 nextPos = _checkPoints[1].transform.position;
         Vector3 forwardDir = (nextPos - startPos).normalized;
-        
-        for (int i = 0; i < _raceConfig.Racers - 1; i++)
-        {
-            Vector3 right = Vector3.Cross(Vector3.up, forwardDir);
-            Vector3 offset = right * ((i % 2 == 0 ? 1 : -1) * (i / 2) * _lateralSpacing);
-            Vector3 spawnPos = startPos - forwardDir * (i * _spawnSpacing) + offset;
-            
-            GameObject go = Instantiate(_aiPrefab, spawnPos, Quaternion.LookRotation(forwardDir, Vector3.up));
-            go.name = $"Racer_{i + 1}";
-            go.transform.position = _checkPoints[0].transform.position + new Vector3(i * 2, 0, 0);
-            Racer racer = go.GetComponentInChildren<Racer>();
-            racer.SetRacerName($"Racer_{i + 1}");
-            //float randomSpeed = Random.Range(racerSpeedMin, racerSpeedMax);
-            AIInput input = go.GetComponentInChildren<AIInput>();
-            racer.Init(_checkPoints, _raceConfig.Laps);
-            input.Init(_raceSpline);
-            //racer.InitSimulation(_checkPoints, _raceConfig.Laps, 15);
-
-            _racers.Add(racer);
+        List<Transform> spawns = _spawns;
+        int i; 
+        for (i = 0; i < _raceConfig.Racers - 1; i++) {
+            SpawnAI(spawns, forwardDir, i);
         }
-
+        
+        SpawnPlayer(spawns, forwardDir, i);
     }
+
+    private void SpawnAI(List<Transform> spawns, Vector3 forwardDir, int index) {
+        Transform spawn = spawns[UnityEngine.Random.Range(0, spawns.Count)];
+        GameObject go = Instantiate(_aiPrefab, spawn.position, Quaternion.LookRotation(forwardDir, Vector3.up));
+        spawns.Remove(spawn);
+            
+        go.name = $"Racer_{index + 1}";
+        Racer racer = go.GetComponentInChildren<Racer>();
+        racer.SetRacerName($"Racer_{index + 1}");
+        //float randomSpeed = Random.Range(racerSpeedMin, racerSpeedMax);
+        AIInput input = go.GetComponentInChildren<AIInput>();
+        racer.Init(_checkPoints, _raceConfig.Laps);
+        input.Init(/*_raceSpline*/);
+        //racer.InitSimulation(_checkPoints, _raceConfig.Laps, 15);
+
+        _racers.Add(racer);
+    }
+    
+    private void SpawnPlayer(List<Transform> spawns, Vector3 forwardDir, int index) {
+        Transform spawn = spawns[^1];
+        GameObject go = Instantiate(_playerPrefab, spawn.position, Quaternion.LookRotation(forwardDir, Vector3.up));
+        spawns.Remove(spawn);
+        
+        go.name = $"Racer_{index + 1}";
+        Racer racer = go.GetComponentInChildren<Racer>();
+        racer.SetRacerName($"Racer_{index + 1}");
+        racer.Init(_checkPoints, _raceConfig.Laps);
+
+        _racers.Add(racer);
+    }
+
     void Update()
     {
         if (_raceFinished || !RaceStarted) return;
