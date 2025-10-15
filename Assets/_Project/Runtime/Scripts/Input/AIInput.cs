@@ -13,7 +13,7 @@ public class AIInput : Input
 {
     private IControllable _controllable;
     private SplineContainer _track;
-    private IAConfig _config;
+    [SerializeField] private IAConfig _config;
 
     [SerializeField] private float _prog = 0f;
     [SerializeField] private Racer _racer;
