@@ -13,7 +13,7 @@ public class AIInput : Input
 {
     private IControllable _controllable;
     private SplineContainer _track;
-    private IAConfig _config;
+    [SerializeField] private IAConfig _config;
 
     [SerializeField] private float _prog = 0f;
     [SerializeField] private Racer _racer;
@@ -65,7 +65,7 @@ public class AIInput : Input
         
         Vector3 targetDir = (lookPoint - pos).normalized;
         targetDir = Quaternion.Euler(0, _errorOffset, 0) * targetDir;
-        _targetDebug = pos + targetDir * 10;
+        _targetDebug = lookPoint;
         
         Vector3 forward = transform.forward;
         float angleDelta = Vector3.SignedAngle(forward, targetDir, Vector3.up);
