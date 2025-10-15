@@ -152,9 +152,9 @@ public class AIInput : Input
 
     private void OnDrawGizmos()
     {
-        if (_racer == null || _racer.Checkpoints.Count <= 0 || _racer.CurrentCheckpoint == null || _racer.NextCheckpoint == null)
+        if (_racer == null || _racer.Checkpoints.Count <= 0 || _racer.CurrentCheckpoint == null || _racer.NextCheckpoint == null ||!Application.isPlaying)
             return;
-
+        
         Gizmos.color = Color.yellow;
         Gizmos.DrawSphere(transform.position, 0.5f);
 

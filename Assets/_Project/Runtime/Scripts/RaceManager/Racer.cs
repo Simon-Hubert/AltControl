@@ -8,8 +8,8 @@ public class Racer : MonoBehaviour
     
     bool _hasFinished = false;
     bool _isAlive = true;
-    int _currentLap; 
-    int _lastCheckpointIndex;
+    int _currentLap;
+    private int _lastCheckpointIndex = 0;
     private int _lapsToWin;
     float _totalTime;
     private float _distToNextCheckpoint = float.MaxValue;

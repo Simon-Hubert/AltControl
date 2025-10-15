@@ -329,7 +329,6 @@ GameObject:
   - component: {fileID: 7214697852458632207}
   - component: {fileID: 2813661637482098982}
   - component: {fileID: 1030663333691156845}
-  - component: {fileID: -5279937857600786051}
   m_Layer: 0
   m_Name: ChariotAI
   m_TagString: Untagged
@@ -417,28 +416,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
---- !u!114 &-5279937857600786051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5921030339573441373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbac1a67837f62d46baac84c6c985cf7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speed: 10
-  _steerSensitivity: 1
-  _maxSteerAngle: 30
-  _minAxisPower: 0.5
-  _steerStrength: 0.4
-  _errorInterval: 2
-  _maxErrorAngle: 5
-  _lookAhead: 2
-  _prog: 0
-  _racer: {fileID: 0}
 --- !u!1 &6311665952873899278
 GameObject:
   m_ObjectHideFlags: 0
@@ -523,6 +500,7 @@ GameObject:
   - component: {fileID: 7238976545956580815}
   - component: {fileID: 7630500931266289528}
   - component: {fileID: 7989098111354379334}
+  - component: {fileID: 7002758000245320491}
   m_Layer: 0
   m_Name: Horses
   m_TagString: Untagged
@@ -640,6 +618,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7002758000245320491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7583105396572166920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbac1a67837f62d46baac84c6c985cf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speed: 10
+  _steerSensitivity: 1
+  _maxSteerAngle: 30
+  _minAxisPower: 0.5
+  _steerStrength: 0.4
+  _errorInterval: 2
+  _maxErrorAngle: 5
+  _lookAhead: 2
+  _prog: 0
+  _racer: {fileID: 7989098111354379334}
 --- !u!1001 &820399963590128368
 PrefabInstance:
   m_ObjectHideFlags: 0
