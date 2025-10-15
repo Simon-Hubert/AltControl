@@ -1,93 +1,112 @@
 using System;
+using System.Collections;
+using NaughtyAttributes;
+using Unity.Cinemachine;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Splines;
+using Random = System.Random;
 
-public class AIInput : MonoBehaviour
+public class AIInput : Input
 {
     private IControllable _controllable;
     private SplineContainer _track;
+    [SerializeField] private IAConfig _config;
 
-    [Header("AI Settings")]
-    [SerializeField] private float _speed = 10f;            
-    [SerializeField] private float _lookAheadOnSpline = 0.05f;      
-    [SerializeField] private float _correctionAngle = 1f;      
-    [SerializeField] private float _minAxisPower = 0.5f;        
-    [SerializeField] private float _steerStrength = 0.4f;       
-    [SerializeField] private float _errorInterval = 2f;      
-    [SerializeField] private float _maxErrorAngle = 5f;    
-
-    private float _splineLength;
+    [SerializeField] private float _prog = 0f;
+    [SerializeField] private Racer _racer;
+    [SerializeField] private Rigidbody _rb;
+    
     private float _progress;
     private float _errorTimer;
     private float _errorOffset;
     private bool _initialized = false;
+    private float _tDelta, _tAI, _offset = 0.005f;
 
-    private Vector3 _target, _debugPos;
+    private Vector3 _target, _current, _targetDebug;
 
-    public void Init(SplineContainer track)
+    private Coroutine _accelCoolDownRoutine;
+
+    public void Init(IAConfig config)
     {
         _controllable = GetComponentInParent<IControllable>();
-        _track = track;
-        _splineLength = _track.CalculateLength();
         _progress = 0f;
         _errorTimer = 0f;
+        _config = config;
         _initialized = true;
     }
 
     private void Update()
     {
-        if (!_initialized || _track == null)
+        if (!_initialized)
             return;
-        
-        Vector3 splinePos = _track.transform.InverseTransformPoint(transform.position);
-        SplineUtility.GetNearestPoint(_track.Spline, splinePos, out float3 nearest, out float t);
-        
-        float3 worldnearestpoint = _track.EvaluatePosition(t);
-        
-        _track.Evaluate(t + _lookAheadOnSpline, out float3 worldtargetPoint, out float3 worldTargetTan, out float3 worldTargetUp);
-        Vector3 normale = Vector3.Cross(worldTargetTan, worldTargetUp);
-        
+
+       _current = _racer.CurrentCheckpoint.transform.position;
+       _target = _racer.NextCheckpoint.transform.position;
+       
+       Vector3 pos = transform.position;
+       
+       float segmentLength = Vector3.Distance(_current, _target);
+       float distFromLastChecekPoint = Vector3.Dot((pos - _current), (_target - _current).normalized);
+       
+       float t = Mathf.Clamp01(distFromLastChecekPoint / segmentLength);
+       
+       float lookT = Mathf.Clamp01(t + _config.LookAhead / segmentLength);
+       Vector3 lookPoint = Vector3.Lerp(_current, _target, lookT);
+
         _errorTimer += Time.deltaTime;
-        if (_errorTimer >= _errorInterval)
+        if (_errorTimer >= _config.ErrorInterval)
         {
-            _errorOffset = UnityEngine.Random.Range(-_maxErrorAngle, _maxErrorAngle);
+            _errorOffset = UnityEngine.Random.Range(-_config.MaxErrorAngle, _config.MaxErrorAngle);
             _errorTimer = 0f;
         }
         
-        _debugPos = new Vector3(worldnearestpoint.x, worldnearestpoint.y, worldnearestpoint.z);
-        _target = new Vector3(worldtargetPoint.x, worldtargetPoint.y, worldtargetPoint.z);
-        
-        _target += normale * _errorOffset;
-        
-        Vector3 targetDir = ((Vector3)(_target - _debugPos)).normalized;
-        
-       targetDir = Quaternion.Euler(0, _errorOffset, 0) * targetDir;
+        Vector3 targetDir = (lookPoint - pos).normalized;
+        targetDir = Quaternion.Euler(0, _errorOffset, 0) * targetDir;
+        _targetDebug = lookPoint;
         
         Vector3 forward = transform.forward;
         float angleDelta = Vector3.SignedAngle(forward, targetDir, Vector3.up);
         
-        if (Mathf.Abs(angleDelta) > _correctionAngle)
+        float steerFactor = Mathf.Clamp(angleDelta / _config.MaxSteerAngle, -1f, 1f);
+        steerFactor *= _config.SteerSensitivity;
+        
+        float left = (_config.MinAxisPower - steerFactor * _config.SteerStrength);
+        float right = (_config.MinAxisPower + steerFactor * _config.SteerStrength);
+        float triggerBoost = Vector3.Dot(_racer.CurrentCheckpoint.transform.forward, _racer.NextCheckpoint.transform.forward);
+        
+        _rb.AddForce(transform.forward * _config.Boost, ForceMode.Acceleration);
+        
+        if (_config.TriggerBoostLimit < triggerBoost && _accelCoolDownRoutine == null)
         {
-            float steerFactor = Mathf.Clamp(angleDelta / 45f, -1f, 1f);
-            
-            float left = _minAxisPower - steerFactor * _steerStrength;
-            float right = _minAxisPower + steerFactor * _steerStrength;
-            
-            _controllable.OnLeftAxis(Mathf.Clamp01(left));
-            _controllable.OnRightAxis(Mathf.Clamp01(right));
+            _controllable.OnLeftButton();
+            _controllable.OnRightButton();
+            _accelCoolDownRoutine = StartCoroutine(CoolDownAcceleration());
         }
-        else
-        {
-            _controllable.OnLeftAxis(0f);
-            _controllable.OnRightAxis(0f);
-        }
+        _controllable.OnLeftAxis(left);
+        _controllable.OnRightAxis(right);
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(new Vector3(_debugPos.x, _debugPos.y, _debugPos.z), 1);
-        Gizmos.DrawWireSphere(new Vector3(_target.x, _target.y, _target.z), 1);
+        if (_racer == null || _racer.Checkpoints.Count <= 0 || _racer.CurrentCheckpoint == null || _racer.NextCheckpoint == null ||!Application.isPlaying)
+            return;
+        
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawSphere(transform.position, 0.5f);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(_targetDebug, 0.5f);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawLine(transform.position, _targetDebug);
+    }
+
+    IEnumerator CoolDownAcceleration()
+    {
+        yield return new WaitForSeconds(_config.CoolDownAccel);
+        _accelCoolDownRoutine = null;
     }
 }

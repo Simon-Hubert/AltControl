@@ -721,12 +721,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 10
-  _lookAheadOnSpline: 0.015
-  _correctionAngle: 5
+  _steerSensitivity: 1
+  _maxSteerAngle: 30
   _minAxisPower: 0.5
-  _steerStrength: 0.4
+  _steerStrength: 1
   _errorInterval: 2
-  _maxErrorAngle: 0.05
+  _maxErrorAngle: 0.01
+  _lookAhead: 2
+  _prog: 0
+  _racer: {fileID: 2180210550937768490}
 --- !u!114 &2180210550937768490
 MonoBehaviour:
   m_ObjectHideFlags: 0

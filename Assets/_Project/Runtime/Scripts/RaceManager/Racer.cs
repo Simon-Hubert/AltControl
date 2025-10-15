@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Racer : MonoBehaviour
 {
@@ -7,8 +9,8 @@ public class Racer : MonoBehaviour
     
     bool _hasFinished = false;
     bool _isAlive = true;
-    int _currentLap; 
-    int _lastCheckpointIndex;
+    int _currentLap;
+    private int _lastCheckpointIndex = 0;
     private int _lapsToWin;
     float _totalTime;
     private float _distToNextCheckpoint = float.MaxValue;
@@ -26,13 +28,36 @@ public class Racer : MonoBehaviour
     public float TotalTime => _totalTime;
     public float DistToNextCheckpoint => _distToNextCheckpoint;
     public string RacerName => _racerName;
+    public CheckPoint NextCheckpoint => _nextCheckpoint;
+    public CheckPoint CurrentCheckpoint => _checkpoints[_lastCheckpointIndex];
+    public List<CheckPoint> Checkpoints => _checkpoints;
+    private int _placement;
+
+    public int Placement
+    {
+        get => _placement;
+        set
+        {
+            if (value != _placement) {
+                _placement = value;
+                OnPositionChange?.Invoke(value);
+            }
+        }
+    }
+
+    public event Action<int> OnPositionChange;
+    public event Action<int> OnFinishedLap;
+
+    
+
+    [SerializeField] private UnityEvent<CheckPoint> _onCheckPointPassed;
 
     public void Init(List<CheckPoint> checkPoints, int lapsToWin)
     {
         _checkpoints = checkPoints;
-        _nextCheckpoint = _checkpoints[0];
+        _nextCheckpoint = _checkpoints[1];
         _currentLap = 0;
-        _lastCheckpointIndex = -1;
+        _lastCheckpointIndex = 0;
         _hasFinished = false;
         _isAlive = true;
         _totalTime = 0;
@@ -54,6 +79,7 @@ public class Racer : MonoBehaviour
 
     public void OnCheckPointPassed(CheckPoint checkPoint)
     {
+        _onCheckPointPassed?.Invoke(checkPoint);
         if(_hasFinished) return;
         
         int expectedIndex = (_lastCheckpointIndex + 1) % _checkpoints.Count;
@@ -67,6 +93,7 @@ public class Racer : MonoBehaviour
         if (checkPoint.IsFinishLine)
         {
             _currentLap++;
+            OnFinishedLap?.Invoke(_currentLap);
 
             if (_currentLap >= _lapsToWin)
             {

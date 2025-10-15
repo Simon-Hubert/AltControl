@@ -1,22 +1,24 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerInput : MonoBehaviour
+public class PlayerInput : Input
 {
-    [SerializeField] private InputActionReference _rightAxis;
-    [SerializeField] private InputActionReference _leftAxis;
-    [SerializeField] private InputActionReference _rightButton;
-    [SerializeField] private InputActionReference _leftButton;
+    private InputActionReference _rightAxis;
+    private InputActionReference _leftAxis;
+    private InputActionReference _rightButton;
+    private InputActionReference _leftButton;
 
     private IControllable _controllable;
-    
+
+    public override bool IsPlayer => true;
+
 
     private void Awake() {
         _controllable = GetComponent<IControllable>();
     }
 
     private void OnEnable() {
+        SetConfig();
         _rightAxis.action.performed += RightAxis;
         _rightAxis.action.canceled += RightAxis;
         _leftAxis.action.performed += LeftAxis;
@@ -24,8 +26,9 @@ public class PlayerInput : MonoBehaviour
         _rightButton.action.started += RightButton;
         _leftButton.action.started += LeftButton;
     }
-    
+
     private void OnDisable() {
+        SetConfig();
         _rightAxis.action.performed -= RightAxis;
         _rightAxis.action.canceled -= RightAxis;
         _leftAxis.action.performed -= LeftAxis;
@@ -34,7 +37,6 @@ public class PlayerInput : MonoBehaviour
         _rightButton.action.started -= RightButton;
         _leftButton.action.started -= LeftButton;
     }
-
     
     private void RightAxis(InputAction.CallbackContext ctx ) {
         _controllable.OnRightAxis(ctx.ReadValue<float>());
@@ -50,5 +52,13 @@ public class PlayerInput : MonoBehaviour
     
     private void LeftButton(InputAction.CallbackContext ctx) {
         _controllable.OnLeftButton();
+    }
+    
+    private void SetConfig() {
+        InputConfig config = Resources.Load<InputConfig>("InputConfig");
+        _rightAxis = config.RightAxis;
+        _leftAxis = config.LeftAxis;
+        _rightButton = config.RightButton;
+        _leftButton = config.LeftButton;
     }
 }
