@@ -3,6 +3,8 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+public delegate void RespawnHandle(Vector3 position, Quaternion rotation);
+
 public class Respawn : MonoBehaviour
 {
     [SerializeField] private GameObject _chariotPrefab;
@@ -11,7 +13,7 @@ public class Respawn : MonoBehaviour
     [SerializeField] private CollisionManager _collisions;
     [SerializeField] private Rigidbody _rb;
     
-    private Transform _spawnPoint;
+    private CheckPoint _spawnPoint;
     private bool _isRespawning;
     
     private void OnEnable() {
@@ -37,25 +39,30 @@ public class Respawn : MonoBehaviour
         StartCoroutine(RespawnRoutine());
     }
     
-    private void RespawnChar() {
+    private void RespawnChar(Vector3 position, Quaternion rotation) {
         _visual.SetActive(true);
         StartCoroutine(RespawnInvincibility());
-        _transform.position = _spawnPoint.position;
-        _transform.rotation = _spawnPoint.rotation * Quaternion.Euler(0,90,0);
+        _transform.position = position;
+        _transform.rotation = rotation;
         _rb.linearVelocity = Vector3.zero;
         _isRespawning = false;
     }
 
     public void SetSpawnPoint(CheckPoint cp) {
-        _spawnPoint = cp.transform;
+        _spawnPoint = cp;
     }
 
-    IEnumerator RespawnRoutine() {
-        yield return new WaitForSeconds(1f);
-        RespawnChar();
+    private void AddToRespawnQueue() {
+        _spawnPoint.AddToRespawnQueue(RespawnChar);
     }
-    
-    IEnumerator RespawnInvincibility() {
+
+    private IEnumerator RespawnRoutine() {
+        float t = Resources.Load<ChariotConfig>("ChariotConfig").WaitForRespawnTime;
+        yield return new WaitForSeconds(t);
+        AddToRespawnQueue();
+    }
+
+    private IEnumerator RespawnInvincibility() {
         float t = Resources.Load<ChariotConfig>("ChariotConfig").RespawnInvincibilityTime;
         yield return new WaitForSeconds(t);
         _collisions.enabled = true;

@@ -96,6 +96,11 @@ public class ChariotController : MonoBehaviour, IControllable
         StartCoroutine(ResetLeftBoolCoroutine());
     }
 
+    public void Enable(bool enabled)
+    {
+        this.enabled = enabled;
+    }
+
     private void UpdateConfig() {
         brakeCurve = config.BrakeCurve;
         maxTurnAngle = config.SteerAngle;

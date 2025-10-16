@@ -39,6 +39,7 @@ public class AIRace : RaceManager
         }
         
         SpawnPlayer(spawns, forwardDir, i);
+        StartRace();
     }
 
     private void SpawnAI(List<Transform> spawns, Vector3 forwardDir, int index) {
@@ -52,7 +53,7 @@ public class AIRace : RaceManager
         AIInput input = go.GetComponentInChildren<AIInput>();
         racer.Init(_checkPoints, _raceConfig.Laps);
         input.Init(_aiConfigs[UnityEngine.Random.Range(0, _aiConfigs.Count)]);
-
+        OnRaceStarted += input.StartUp;
         _racers.Add(racer);
     }
     
@@ -65,7 +66,8 @@ public class AIRace : RaceManager
         Racer racer = go.GetComponentInChildren<Racer>();
         racer.SetRacerName($"Racer_{index + 1}");
         racer.Init(_checkPoints, _raceConfig.Laps);
-
+        PlayerInput input = go.GetComponent<PlayerInput>();
+        OnRaceStarted += input.StartUp;
         _racers.Add(racer);
         _placementUI.SetRacer(racer);
     }
@@ -124,7 +126,6 @@ public class AIRace : RaceManager
         Racer winner = ordered.First();
         Debug.Log($"Winner is {winner.RacerName}");
     }
-    
     private void DisplayFinalRanking()
     {
         var ordered = _racers.OrderByDescending(r => r.GetRaceProgress()).ThenBy(r => r.TotalTime).ToList();

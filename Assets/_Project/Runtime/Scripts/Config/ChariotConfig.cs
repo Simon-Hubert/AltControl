@@ -21,7 +21,10 @@ public class ChariotConfig : ScriptableObject
     [Header("Collisions")] 
     public float RespawnForce;
     public float RespawnInvincibilityTime;
+    public float WaitForRespawnTime;
 
+    [Header("Respawn")] 
+    public float RespawnBusTimer;
     [Header("Animation")]
     public float MaxAnimationSpeed;
 }
