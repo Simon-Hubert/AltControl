@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a571559d881b04e479f70ef68912df97, type: 3}
-  m_Name: AIConfig_0
+  m_Name: AIConfig_standard
   m_EditorClassIdentifier: 
-  Boost: 2
-  SteerSensitivity: 1
-  MaxSteerAngle: 30
+  Boost: 0
+  SteerSensitivity: 0.75
+  MaxSteerAngle: 20
   MinAxisPower: 0.5
   SteerStrength: 0.4
   ErrorInterval: 2
-  MaxErrorAngle: 5
-  LookAhead: 2
+  MaxErrorAngle: 3
+  LookAhead: 0.5
   CoolDownAccel: 2
   TriggerBoostLimit: 0.9
