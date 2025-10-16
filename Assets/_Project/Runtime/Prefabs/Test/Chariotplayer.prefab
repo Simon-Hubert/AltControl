@@ -941,6 +941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e220e32a91e51024dbea3cb4e0593fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isPlayer: 1
   _collisionManager: {fileID: 7214697852458632207}
   _collisionControllerHorse: {fileID: 7630500931266289528}
   _collisionControllerChariot: {fileID: 8730606817127374674}
@@ -969,6 +970,18 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 3733697c3a873f24f91853e1689cba5e, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6960999000565964926}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 17ec5ba57f6d13346816e7b2085952ce, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0

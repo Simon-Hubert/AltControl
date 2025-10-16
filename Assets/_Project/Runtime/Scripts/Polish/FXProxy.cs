@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class FXProxy : MonoBehaviour
 {
+    [SerializeField] private bool _isPlayer = false;
+    
     [SerializeField] private CollisionManager _collisionManager;
     [SerializeField] private CollisionController _collisionControllerHorse, _collisionControllerChariot;
     [SerializeField] private ChariotController _chariot;
@@ -15,9 +17,15 @@ public class FXProxy : MonoBehaviour
     [SerializeField] private UnityEvent UnityOnStartUp;
 
     private Vector3 _spawnPos;
+    private Camera _camera;
 
     private void Start()
     {
+        if (_isPlayer)
+        {
+            _camera = Camera.main;
+            _chariot.OnBoost += _camera.gameObject.GetComponentInChildren<ParticleSystem>().Play;
+        }
         _chariot.OnBoost += UnityOnBoost.Invoke;
         _collisionManager.OnCollide += UnityOnCollision.Invoke;
         _collisionManager.OnRespawn += UnityOnCrash.Invoke;
