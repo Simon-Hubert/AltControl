@@ -35,6 +35,12 @@ public class AIInput : Input
         _progress = 0f;
         _errorTimer = 0f;
         _config = config;
+        _controllable.Enable(false);
+    }
+
+    public void StartUp()
+    {
+        _controllable.Enable(true);
         _initialized = true;
     }
 
