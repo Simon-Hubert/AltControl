@@ -9,7 +9,6 @@ using UnityEngine.UI;
 
 public abstract class RaceManager : MonoBehaviour
 {
-    [SerializeField] protected CountDownAnim _countDownAnim;
     [SerializeField] protected RaceConfig _raceConfig;
     [SerializeField] protected List<CheckPoint> _checkPoints;
     [SerializeField] protected List<Transform> _spawns;
@@ -22,6 +21,7 @@ public abstract class RaceManager : MonoBehaviour
     public UnityEvent UnityOnCountdownRace;
     
     public event Action OnRaceStarted;
+    public event Action<int> OnCountDownRace;
 
 
     protected bool _raceStarted, _raceFinished;
@@ -31,12 +31,22 @@ public abstract class RaceManager : MonoBehaviour
     public bool RaceStarted => _raceStarted;
     public List<Racer> Racers => _racers;
     //public SplineContainer RaceSpline => _raceSpline;
+    
+    public static RaceManager Instance;
+
+    private void Awake()
+    {
+        if(Instance == null) Instance = this;
+        else Destroy(this);
+    }
+
     public virtual void Init(List<CheckPoint> checkpoints = null)
     {
         if (checkpoints != null)
         {
             _checkPoints = checkpoints;
             _checkPoints.OrderBy(c => c.Index).ToList();
+            _checkPoints[0].OnLastLap += LastLap;
         }
         else
         {
@@ -70,6 +80,11 @@ public abstract class RaceManager : MonoBehaviour
         _raceFinished = true;
         
         UnityOnRaceStopped?.Invoke();
+    }
+
+    public virtual void LastLap()
+    {
+        GetComponent<AudioSource>().pitch *= 1.25f;
     }
     
     public abstract void CheckWinCondition();
@@ -108,7 +123,7 @@ public abstract class RaceManager : MonoBehaviour
 
         for (int i = 0; i < _countDownRace; i++)
         {
-            _countDownAnim.CountDown(i);
+            OnCountDownRace?.Invoke(i);
             yield return new WaitForSeconds(1);
         }
         

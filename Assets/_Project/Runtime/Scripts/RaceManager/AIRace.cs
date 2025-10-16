@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Random = System.Random;
 
-[RequireComponent(typeof(SplineContainer))]
 public class AIRace : RaceManager
 {
     [SerializeField] private GameObject _playerPrefab;
@@ -13,7 +12,7 @@ public class AIRace : RaceManager
     [SerializeField] private bool isTest = false;
     [SerializeField] private List<IAConfig> _aiConfigs;
     [SerializeField] private Placement _placementUI;
-
+    
     private void Start()
     {
         if (!isTest)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,12 +8,17 @@ public class CheckPoint : MonoBehaviour
     [SerializeField] private int _index;
     [SerializeField] private bool _isFinishLine;
     [SerializeField] private float _width;
+
+    private bool _passed = false;
     
     public int Index => _index;
     public bool IsFinishLine => _isFinishLine;
     private float _respawnBusTime;
     
     private Queue<RespawnHandle> _respawnQueue = new Queue<RespawnHandle>();
+    
+
+    public event Action OnLastLap;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,6 +26,11 @@ public class CheckPoint : MonoBehaviour
         if (racer != null)
         {
             racer.OnCheckPointPassed(this);
+            if ( _isFinishLine && racer.CurrentLap == racer.LapsToWin - 1 && !_passed)
+            {
+                _passed = true;
+                OnLastLap?.Invoke();
+            }
         }
     }
     
