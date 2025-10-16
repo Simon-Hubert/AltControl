@@ -101,6 +101,11 @@ public class AIRace : RaceManager
         }
     }
 
+    public override void LastLap()
+    {
+        Debug.Log("Last lap");
+        GetComponent<AudioSource>().pitch *= 1.15f;
+    }
     public override void UpdateRace()
     {
         base.UpdateRace();

@@ -1185,7 +1185,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1179038675}
-  - component: {fileID: 1179038674}
   - component: {fileID: 1179038673}
   - component: {fileID: 1179038676}
   m_Layer: 0
@@ -1321,46 +1320,6 @@ MonoBehaviour:
   isTest: 0
   _aiConfigs: []
   _placementUI: {fileID: 1914098111}
---- !u!114 &1179038674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1179038672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Spline:
-    m_EditModeType: 1
-    m_Knots: []
-    m_MetaData: []
-    m_Closed: 0
-    m_IntData:
-      m_Data: []
-    m_FloatData:
-      m_Data: []
-    m_Float4Data:
-      m_Data: []
-    m_ObjectData:
-      m_Data: []
-  m_Splines:
-  - m_EditModeType: 1
-    m_Knots: []
-    m_MetaData: []
-    m_Closed: 0
-    m_IntData:
-      m_Data: []
-    m_FloatData:
-      m_Data: []
-    m_Float4Data:
-      m_Data: []
-    m_ObjectData:
-      m_Data: []
-  m_Knots:
-    m_KnotsLink: []
 --- !u!4 &1179038675
 Transform:
   m_ObjectHideFlags: 0

@@ -46,7 +46,6 @@ public abstract class RaceManager : MonoBehaviour
         {
             _checkPoints = checkpoints;
             _checkPoints.OrderBy(c => c.Index).ToList();
-            _checkPoints[0].OnLastLap += LastLap;
         }
         else
         {

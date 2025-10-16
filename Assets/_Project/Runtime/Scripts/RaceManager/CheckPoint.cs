@@ -16,9 +16,6 @@ public class CheckPoint : MonoBehaviour
     private float _respawnBusTime;
     
     private Queue<RespawnHandle> _respawnQueue = new Queue<RespawnHandle>();
-    
-
-    public event Action OnLastLap;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -29,7 +26,7 @@ public class CheckPoint : MonoBehaviour
             if ( _isFinishLine && racer.CurrentLap == racer.LapsToWin - 1 && !_passed)
             {
                 _passed = true;
-                OnLastLap?.Invoke();
+                RaceManager.Instance.LastLap();
             }
         }
     }

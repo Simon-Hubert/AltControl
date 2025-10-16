@@ -40,6 +40,8 @@ public class ChariotController : MonoBehaviour, IControllable
 
     [SerializeField] private Rigidbody _rb;
 
+    public event Action OnBoost;
+
     private void Awake() {
         config = Resources.Load<ChariotConfig>("ChariotConfig");
         UpdateConfig();
@@ -53,6 +55,7 @@ public class ChariotController : MonoBehaviour, IControllable
             _rb.AddForce(_rb.transform.forward * rushForce, ForceMode.VelocityChange);
             _leftRushInput = false;
             _rightRushInput = false;
+            OnBoost?.Invoke();
         }
         
 
