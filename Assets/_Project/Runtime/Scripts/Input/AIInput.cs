@@ -40,6 +40,7 @@ public class AIInput : Input
 
     public void StartUp()
     {
+        transform.position += new Vector3(0, .25f, 0);
         _controllable.Enable(true);
         _initialized = true;
     }
