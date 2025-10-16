@@ -91,3 +91,4 @@ MonoBehaviour:
   RespawnInvincibilityTime: 2
   WaitForRespawnTime: 1.5
   RespawnBusTimer: 0.5
+  MaxAnimationSpeed: 3
