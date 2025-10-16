@@ -35,6 +35,13 @@ public class AIInput : Input
         _progress = 0f;
         _errorTimer = 0f;
         _config = config;
+        _controllable.Enable(false);
+    }
+
+    public void StartUp()
+    {
+        transform.position += new Vector3(0, .25f, 0);
+        _controllable.Enable(true);
         _initialized = true;
     }
 

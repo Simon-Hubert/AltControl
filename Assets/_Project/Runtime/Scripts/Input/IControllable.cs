@@ -6,4 +6,6 @@ public interface IControllable
     public void OnLeftAxis(float value);
     public void OnRightButton();
     public void OnLeftButton();
+
+    public void Enable(bool enabled);
 }

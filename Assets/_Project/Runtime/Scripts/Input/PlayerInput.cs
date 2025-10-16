@@ -15,6 +15,7 @@ public class PlayerInput : Input
 
     private void Awake() {
         _controllable = GetComponent<IControllable>();
+        _controllable.Enable(false);
     }
 
     private void OnEnable() {
@@ -37,7 +38,12 @@ public class PlayerInput : Input
         _rightButton.action.started -= RightButton;
         _leftButton.action.started -= LeftButton;
     }
-    
+
+    public void StartUp()
+    {
+        transform.position += new Vector3(0, .25f, 0);
+        _controllable.Enable(true);
+    }
     private void RightAxis(InputAction.CallbackContext ctx ) {
         _controllable.OnRightAxis(ctx.ReadValue<float>());
     }

@@ -1,19 +1,28 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Splines;
+using UnityEngine.UI;
 
 public abstract class RaceManager : MonoBehaviour
 {
+    [SerializeField] protected CountDownAnim _countDownAnim;
     [SerializeField] protected RaceConfig _raceConfig;
     [SerializeField] protected List<CheckPoint> _checkPoints;
     [SerializeField] protected List<Transform> _spawns;
+    [SerializeField] protected int _countDownRace = 3;
     
     //[SerializeField] protected SplineContainer _raceSpline;
 
     public UnityEvent UnityOnRaceStarted;
     public UnityEvent UnityOnRaceStopped;
+    public UnityEvent UnityOnCountdownRace;
+    
+    public event Action OnRaceStarted;
+
 
     protected bool _raceStarted, _raceFinished;
     protected List<Racer> _racers;
@@ -22,7 +31,6 @@ public abstract class RaceManager : MonoBehaviour
     public bool RaceStarted => _raceStarted;
     public List<Racer> Racers => _racers;
     //public SplineContainer RaceSpline => _raceSpline;
-
     public virtual void Init(List<CheckPoint> checkpoints = null)
     {
         if (checkpoints != null)
@@ -48,10 +56,7 @@ public abstract class RaceManager : MonoBehaviour
 
     public virtual void StartRace()
     {
-        _raceStarted = true;
-        _raceFinished = false;
-        
-        UnityOnRaceStarted?.Invoke();
+        StartCoroutine(CountdownRace());
     }
 
     public virtual void UpdateRace()
@@ -96,4 +101,21 @@ public abstract class RaceManager : MonoBehaviour
 
         _raceSpline.Spline.Closed = true;
     }*/
+
+    IEnumerator CountdownRace()
+    {
+        UnityOnCountdownRace?.Invoke();
+
+        for (int i = 0; i < _countDownRace; i++)
+        {
+            _countDownAnim.CountDown(i);
+            yield return new WaitForSeconds(1);
+        }
+        
+        _raceStarted = true;
+        _raceFinished = false;
+        
+        OnRaceStarted?.Invoke();
+        UnityOnRaceStarted?.Invoke();
+    }
 }
