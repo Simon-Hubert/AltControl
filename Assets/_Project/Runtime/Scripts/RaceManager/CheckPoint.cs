@@ -90,6 +90,11 @@ public class CheckPoint : MonoBehaviour
         foreach (ParticleSystem p in _onomatopées)
         {
             p.Play();
+            AudioSource a = p.gameObject.GetComponent<AudioSource>();
+            if (a != null)
+            {
+                a.Play();
+            }
             yield return new WaitForSeconds(0.1f);
         }
     }
