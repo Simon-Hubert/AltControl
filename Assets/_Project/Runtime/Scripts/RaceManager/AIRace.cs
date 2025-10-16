@@ -24,10 +24,14 @@ public class AIRace : RaceManager
     public override void Init(List<CheckPoint> checkpoints = null)
     {
         base.Init(checkpoints);
-        foreach (IAConfig aiConfig in Resources.LoadAll("AIConfigs"))
-        {
-            _aiConfigs.Add(aiConfig);
+
+        if (_aiConfigs.Count <= 0) {
+            foreach (IAConfig aiConfig in Resources.LoadAll<IAConfig>("AIConfigs"))
+            {
+                _aiConfigs.Add(aiConfig);
+            }
         }
+        
         Vector3 startPos = _checkPoints[0].transform.position;
         Vector3 nextPos = _checkPoints[1].transform.position;
         Vector3 forwardDir = (nextPos - startPos).normalized;
