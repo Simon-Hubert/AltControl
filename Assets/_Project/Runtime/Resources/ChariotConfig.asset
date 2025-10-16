@@ -93,4 +93,4 @@ MonoBehaviour:
   RespawnBusTimer: 0.5
   MaxAnimationSpeed: 3
   MaxFOV: 90
-  MinFOV: 70
+  MinFOV: 85

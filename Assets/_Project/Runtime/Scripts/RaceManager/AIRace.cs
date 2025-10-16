@@ -61,6 +61,7 @@ public class AIRace : RaceManager
     }
     
     private void SpawnPlayer(List<Transform> spawns, Vector3 forwardDir, int index) {
+        if (!_playerPrefab) return;
         Transform spawn = spawns[^1];
         GameObject go = Instantiate(_playerPrefab, spawn.position, Quaternion.LookRotation(forwardDir, Vector3.up));
         spawns.Remove(spawn);
