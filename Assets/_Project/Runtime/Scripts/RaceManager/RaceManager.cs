@@ -57,8 +57,8 @@ public abstract class RaceManager : MonoBehaviour
         
         _racers = FindObjectsOfType<Racer>().ToList();
         
-        foreach (var r in _racers)
-            r.Init(_checkPoints, _raceConfig.Laps);
+        //foreach (var r in _racers)
+        //    r.Init(_checkPoints, _raceConfig.Laps);
         _raceStarted = true;
         _raceFinished = false;
     }

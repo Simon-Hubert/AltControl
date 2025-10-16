@@ -54,7 +54,7 @@ public class AIRace : RaceManager
         Racer racer = go.GetComponentInChildren<Racer>();
         racer.SetRacerName($"Racer_{index + 1}");
         AIInput input = go.GetComponentInChildren<AIInput>();
-        racer.Init(_checkPoints, _raceConfig.Laps);
+        racer.Init(_checkPoints, _raceConfig.Laps, false);
         input.Init(_aiConfigs[UnityEngine.Random.Range(0, _aiConfigs.Count)]);
         OnRaceStarted += input.StartUp;
         _racers.Add(racer);
@@ -68,7 +68,7 @@ public class AIRace : RaceManager
         go.name = $"Racer_{index + 1}";
         Racer racer = go.GetComponentInChildren<Racer>();
         racer.SetRacerName($"Racer_{index + 1}");
-        racer.Init(_checkPoints, _raceConfig.Laps);
+        racer.Init(_checkPoints, _raceConfig.Laps, true);
         PlayerInput input = go.GetComponent<PlayerInput>();
         OnRaceStarted += input.StartUp;
         _racers.Add(racer);
