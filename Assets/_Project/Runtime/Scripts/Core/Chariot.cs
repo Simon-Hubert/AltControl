@@ -10,14 +10,11 @@ using Random = System.Random;
 public class Chariot : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera _camera;
-    [SerializeField] AudioSource _charSource, _horseSource;
+    [SerializeField] private AudioSource _charSource, _horseSource;
     [SerializeField] List<AudioClip> _clipCollision = new List<AudioClip>();
     private Input _input;
 
     private AudioSource _mainSource;
-    
-    public UnityEvent UnityOnCrash;
-    public UnityEvent UnityOnBoost;
 
     public int RacerId
     {
@@ -50,6 +47,12 @@ public class Chariot : MonoBehaviour
     {
         AudioClip  a = _clipCollision[UnityEngine.Random.Range(0, _clipCollision.Count)];
         _mainSource.PlayOneShot(a);
+    }
+
+    public void PlayLoopSounds()
+    {
+        _charSource.Play();
+        _horseSource.Play();
     }
 
     #endregion

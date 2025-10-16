@@ -9,8 +9,6 @@ public class CollisionManager : MonoBehaviour
     
     [SerializeField] private UnityEvent _onRespawn;
     public event Action OnRespawn;
-    
-    [SerializeField] private UnityEvent<Vector3> _onCollide;
     public event Action<Vector3> OnCollide;
 
     private void OnEnable() {
@@ -34,7 +32,6 @@ public class CollisionManager : MonoBehaviour
     }
 
     private void Collide(Vector3 force) {
-        _onCollide?.Invoke(force);
         OnCollide?.Invoke(force);
     }
 }

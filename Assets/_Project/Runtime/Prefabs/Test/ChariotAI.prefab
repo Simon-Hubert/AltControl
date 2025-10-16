@@ -227,7 +227,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -485,9 +485,6 @@ MonoBehaviour:
   _onRespawn:
     m_PersistentCalls:
       m_Calls: []
-  _onCollide:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2813661637482098982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -524,36 +521,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: d47ad1e71b144fc4385f70fd461eb4bf, type: 3}
   - {fileID: 8300000, guid: 96d7503cd4afe9344818df29758d2c2b, type: 3}
   - {fileID: 8300000, guid: e9f6b798ed75cff40b77a5cbdea6a6f6, type: 3}
-  UnityOnCrash:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5230636631326190857}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: PlayOneShot
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 62642abea73bbd445b6223679399dc51, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  UnityOnBoost:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5230636631326190857}
-        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
-        m_MethodName: PlayOneShot
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 3733697c3a873f24f91853e1689cba5e, type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!82 &5230636631326190857
 AudioSource:
   m_ObjectHideFlags: 0
@@ -736,6 +703,7 @@ GameObject:
   - component: {fileID: 7630500931266289528}
   - component: {fileID: 7989098111354379334}
   - component: {fileID: 7002758000245320491}
+  - component: {fileID: 6397297336200752888}
   - component: {fileID: 352115554903407427}
   - component: {fileID: 5561816399882672281}
   m_Layer: 0
@@ -871,6 +839,80 @@ MonoBehaviour:
   _prog: 0
   _racer: {fileID: 7989098111354379334}
   _rb: {fileID: 5527695312049132380}
+--- !u!114 &6397297336200752888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7583105396572166920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e220e32a91e51024dbea3cb4e0593fce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collisionManager: {fileID: 7214697852458632207}
+  _chariot: {fileID: 616375917750733798}
+  UnityOnCrash:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5230636631326190857}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 62642abea73bbd445b6223679399dc51, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  UnityOnBoost:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5230636631326190857}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 3733697c3a873f24f91853e1689cba5e, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  UnityOnCollision:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1030663333691156845}
+        m_TargetAssemblyTypeName: Chariot, Assembly-CSharp
+        m_MethodName: PlayCollisionSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  UnityOnStartUp:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1030663333691156845}
+        m_TargetAssemblyTypeName: Chariot, Assembly-CSharp
+        m_MethodName: PlayLoopSounds
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!82 &352115554903407427
 AudioSource:
   m_ObjectHideFlags: 0
@@ -886,7 +928,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
