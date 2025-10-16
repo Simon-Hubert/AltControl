@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: d9dca9ae1786c394f9e79c637aa9a7bf, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -93,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: b234ae62abfbd404d8da057be2557284, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -1007,6 +1007,18 @@ PrefabInstance:
     - target: {fileID: 4011943069951703200, guid: 467d5fa226c19f447ad7397a3e08fedd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6633050627558157844, guid: 467d5fa226c19f447ad7397a3e08fedd, type: 3}
+      propertyPath: m_RenderShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6633050627558157844, guid: 467d5fa226c19f447ad7397a3e08fedd, type: 3}
+      propertyPath: m_RenderPostProcessing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7418587001186951563, guid: 467d5fa226c19f447ad7397a3e08fedd, type: 3}
+      propertyPath: m_OcclusionCulling
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2408,13 +2420,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2039262183}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.32482067, y: -0.5798045, z: 0.27036712, w: 0.69657737}
+  m_LocalRotation: {x: -0.010210277, y: -0.9060429, z: 0.42249566, w: -0.021897895}
   m_LocalPosition: {x: 174.66158, y: 3, z: 113.81181}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -79.545, z: 0}
+  m_LocalEulerAnglesHint: {x: 50, y: -182.769, z: 0}
 --- !u!114 &2043351844 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6061413671618932525, guid: 5ce534df72735494394efa77364237a6, type: 3}
