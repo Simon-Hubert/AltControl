@@ -25,4 +25,6 @@ public class ChariotConfig : ScriptableObject
 
     [Header("Respawn")] 
     public float RespawnBusTimer;
+    [Header("Animation")]
+    public float MaxAnimationSpeed;
 }
