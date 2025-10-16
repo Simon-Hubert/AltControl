@@ -1799,6 +1799,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6061413671618932525, guid: 5ce534df72735494394efa77364237a6, type: 3}
+      propertyPath: _index
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 9123568906227517030, guid: 5ce534df72735494394efa77364237a6, type: 3}
       propertyPath: m_Name
       value: CheckPoints
