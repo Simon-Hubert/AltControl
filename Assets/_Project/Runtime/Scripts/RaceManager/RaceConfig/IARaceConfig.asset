@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7017c6cad5a62e741a9dbe696c40d194, type: 3}
   m_Name: IARaceConfig
   m_EditorClassIdentifier: 
-  Laps: 2
+  Laps: 1
   AllowAI: 1
   AllowPlayers: 1
   EnableDestruction: 0
   TimeLimit: 0
-  Racers: 3
+  Racers: 9

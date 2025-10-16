@@ -14,8 +14,9 @@ public class CountDownAnim : MonoBehaviour
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
+        RaceManager.Instance.OnCountDownRace += CountDown;
     }
-
+    
     public void CountDown(int i)
     {
         _img.sprite = _spritesCountDown[i];

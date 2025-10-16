@@ -5,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Random = System.Random;
 
-[RequireComponent(typeof(SplineContainer))]
 public class AIRace : RaceManager
 {
     [SerializeField] private GameObject _playerPrefab;
@@ -13,7 +12,7 @@ public class AIRace : RaceManager
     [SerializeField] private bool isTest = false;
     [SerializeField] private List<IAConfig> _aiConfigs;
     [SerializeField] private Placement _placementUI;
-
+    
     private void Start()
     {
         if (!isTest)
@@ -25,10 +24,14 @@ public class AIRace : RaceManager
     public override void Init(List<CheckPoint> checkpoints = null)
     {
         base.Init(checkpoints);
-        foreach (IAConfig aiConfig in Resources.LoadAll("AIConfigs"))
-        {
-            _aiConfigs.Add(aiConfig);
+
+        if (_aiConfigs.Count <= 0) {
+            foreach (IAConfig aiConfig in Resources.LoadAll<IAConfig>("AIConfigs"))
+            {
+                _aiConfigs.Add(aiConfig);
+            }
         }
+        
         Vector3 startPos = _checkPoints[0].transform.position;
         Vector3 nextPos = _checkPoints[1].transform.position;
         Vector3 forwardDir = (nextPos - startPos).normalized;
@@ -98,6 +101,11 @@ public class AIRace : RaceManager
         }
     }
 
+    public override void LastLap()
+    {
+        Debug.Log("Last lap");
+        GetComponent<AudioSource>().pitch *= 1.15f;
+    }
     public override void UpdateRace()
     {
         base.UpdateRace();

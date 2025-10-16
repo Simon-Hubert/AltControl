@@ -30,7 +30,7 @@ public class Respawn : MonoBehaviour
         if(Vector3.Dot(_transform.up, Vector3.up) < 0.7) OnRespawn();
     }
 
-    private void OnRespawn() {
+    public void OnRespawn() {
         if (_isRespawning) return;
         _isRespawning = true;
         Instantiate(_chariotPrefab, _transform.position, transform.rotation);

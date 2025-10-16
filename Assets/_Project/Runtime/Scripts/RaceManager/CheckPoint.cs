@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,8 @@ public class CheckPoint : MonoBehaviour
     [SerializeField] private int _index;
     [SerializeField] private bool _isFinishLine;
     [SerializeField] private float _width;
+
+    private bool _passed = false;
     
     public int Index => _index;
     public bool IsFinishLine => _isFinishLine;
@@ -20,6 +23,11 @@ public class CheckPoint : MonoBehaviour
         if (racer != null)
         {
             racer.OnCheckPointPassed(this);
+            if ( _isFinishLine && racer.CurrentLap == racer.LapsToWin - 1 && !_passed)
+            {
+                _passed = true;
+                RaceManager.Instance.LastLap();
+            }
         }
     }
     

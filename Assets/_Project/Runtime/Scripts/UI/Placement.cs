@@ -5,16 +5,11 @@ using UnityEngine.UI;
 
 public class Placement : MonoBehaviour
 {
-    [SerializeField] private string SpriteSheetName;
+    [SerializeField] private Sprite[] _sprites;
     [SerializeField] private Image _imagePlacement;
     [SerializeField] private TMP_Text _textLap;
     
-    private Sprite[] _sprites;
     private Racer _racer;
-
-    private void Awake() {
-        _sprites = Resources.LoadAll<Sprite>("UI/" + SpriteSheetName);
-    }
 
     public void SetRacer(Racer racer) {
         _racer = racer;
@@ -30,7 +25,7 @@ public class Placement : MonoBehaviour
     }
 
     private void UpdateLapUI(int currentLap) {
-        _textLap.text = $"{currentLap} / {_racer.LapsToWin+1}";
+        _textLap.text = $"{currentLap + 1} / {_racer.LapsToWin+1}";
     }
 
     
