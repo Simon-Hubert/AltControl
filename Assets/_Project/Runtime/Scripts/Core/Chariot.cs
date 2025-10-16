@@ -3,11 +3,16 @@ using System.Collections;
 using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Chariot : MonoBehaviour
 {
     [SerializeField] private CinemachineCamera _camera;
+    [SerializeField] AudioSource _charSource, _horseSource;
     private Input _input;
+
+    public UnityEvent UnityOnCrash;
+    public UnityEvent UnityOnBoost;
 
     public int RacerId
     {
