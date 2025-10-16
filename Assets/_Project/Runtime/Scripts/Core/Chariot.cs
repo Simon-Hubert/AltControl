@@ -13,6 +13,10 @@ public class Chariot : MonoBehaviour
     [SerializeField] private AudioSource _charSource, _horseSource;
     [SerializeField] List<AudioClip> _clipCollision = new List<AudioClip>();
     private Input _input;
+    private SpeedProxy _speed;
+    private float _maxSpeed;
+    private float _maxFOV;
+    private float _minFOV;
 
     private AudioSource _mainSource;
 
@@ -25,20 +29,21 @@ public class Chariot : MonoBehaviour
     private void Start() {
         _mainSource = GetComponent<AudioSource>();
         _input = GetComponent<Input>();
+        _speed = GetComponentInChildren<SpeedProxy>();
+        
+        ChariotConfig config = Resources.Load<ChariotConfig>("ChariotConfig");
+        _maxSpeed = config.MaxSpeed;
+        _maxFOV = config.MaxFOV;
+        _minFOV = config.MinFOV;
     }
 
-    public void Possess<T>() where T : Input {
-        _input = transform.AddComponent<T>();
-        if (_input.IsPlayer) {
-            _camera.enabled = true;
-        }
+    private void Update() {
+        if(_camera) _camera.Lens.FieldOfView = GetFOV(_speed.ForwardSpeed);
     }
-
-    public bool UnPossess() {
-        _camera.enabled = false;
-        bool isPlayer = _input.IsPlayer;
-        Destroy(_input);
-        return isPlayer;
+    
+    private float GetFOV(float currentSpeed) {
+        float iL = Mathf.InverseLerp(0, _maxSpeed, currentSpeed);
+        return Mathf.Lerp(_minFOV, _maxFOV, iL);
     }
 
     #region SD

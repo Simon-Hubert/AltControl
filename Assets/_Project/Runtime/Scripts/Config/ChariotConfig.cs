@@ -25,6 +25,11 @@ public class ChariotConfig : ScriptableObject
 
     [Header("Respawn")] 
     public float RespawnBusTimer;
+    
     [Header("Animation")]
     public float MaxAnimationSpeed;
+
+    [Header("Camera")]
+    public float MaxFOV;
+    public float MinFOV;
 }
