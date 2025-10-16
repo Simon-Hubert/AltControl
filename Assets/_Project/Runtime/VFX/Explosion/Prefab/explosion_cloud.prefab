@@ -668,7 +668,7 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 6
     enabled: 0
-    type: 0
+    type: 10
     angle: 25
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
@@ -755,7 +755,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 1
+      value: 0.98
       mode: 0
       spread: 0
       speed:
@@ -1042,6 +1042,95 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 1
+      scalar: 3
+      minScalar: 1
+      maxCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 0
+          inSlope: 0.67183715
+          outSlope: 0.67183715
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0
+          outWeight: 1
+        - serializedVersion: 3
+          time: 0.15144348
+          value: 0.49238467
+          inSlope: 8.124424
+          outSlope: 3.2337935
+          tangentMode: 1
+          weightedMode: 0
+          inWeight: 0.16517356
+          outWeight: 0.21737605
+        - serializedVersion: 3
+          time: 0.20907779
+          value: 0.97108424
+          inSlope: 0.15475233
+          outSlope: -1.5198381
+          tangentMode: 1
+          weightedMode: 0
+          inWeight: 1
+          outWeight: 0.22277021
+        - serializedVersion: 3
+          time: 0.8110886
+          value: 0.76502603
+          inSlope: 0.6428074
+          outSlope: 2.8853533
+          tangentMode: 1
+          weightedMode: 0
+          inWeight: 0.21681313
+          outWeight: 0.37670866
+        - serializedVersion: 3
+          time: 0.9644559
+          value: 0.45871842
+          inSlope: -2.5206323
+          outSlope: -8.1257
+          tangentMode: 1
+          weightedMode: 0
+          inWeight: 0.2941409
+          outWeight: 0.5648356
+        - serializedVersion: 3
+          time: 1
+          value: 0.027690887
+          inSlope: -8.009154
+          outSlope: -8.009154
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.23099148
+          outWeight: 0
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      minCurve:
+        serializedVersion: 2
+        m_Curve:
+        - serializedVersion: 3
+          time: 0
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 1
+          value: 1
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.33333334
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+    y:
+      serializedVersion: 2
+      minMaxState: 1
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -1119,59 +1208,6 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    y:
-      serializedVersion: 2
-      minMaxState: 1
-      scalar: 1
-      minScalar: 1
-      maxCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 0
-          inSlope: 0
-          outSlope: 1
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 1
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
-      minCurve:
-        serializedVersion: 2
-        m_Curve:
-        - serializedVersion: 3
-          time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        m_PreInfinity: 2
-        m_PostInfinity: 2
-        m_RotationOrder: 4
     z:
       serializedVersion: 2
       minMaxState: 1
@@ -1184,20 +1220,47 @@ ParticleSystem:
           time: 0
           value: 0
           inSlope: 0
-          outSlope: 1
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
-        - serializedVersion: 3
-          time: 1
-          value: 1
-          inSlope: 1
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
+        - serializedVersion: 3
+          time: 0.10580881
+          value: 0.8892301
+          inSlope: 11.53159
+          outSlope: Infinity
+          tangentMode: 97
+          weightedMode: 0
+          inWeight: 0.51696265
           outWeight: 0.33333334
+        - serializedVersion: 3
+          time: 0.12454269
+          value: 1
+          inSlope: 0.3522087
+          outSlope: 0.3522087
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 0.25661683
+        - serializedVersion: 3
+          time: 0.88645697
+          value: 0.94706684
+          inSlope: -0.0694739
+          outSlope: -0.6161066
+          tangentMode: 5
+          weightedMode: 0
+          inWeight: 0.33333334
+          outWeight: 1
+        - serializedVersion: 3
+          time: 1
+          value: 0.027690887
+          inSlope: -23.728111
+          outSlope: -23.728111
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.25468203
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -1225,7 +1288,7 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
-    separateAxes: 0
+    separateAxes: 1
   RotationModule:
     enabled: 0
     x:
