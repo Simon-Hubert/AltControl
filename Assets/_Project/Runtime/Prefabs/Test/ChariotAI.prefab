@@ -518,12 +518,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 0}
+  _charSource: {fileID: 2309793897137980112}
+  _horseSource: {fileID: 352115554903407427}
+  _clipCollision:
+  - {fileID: 8300000, guid: d47ad1e71b144fc4385f70fd461eb4bf, type: 3}
+  - {fileID: 8300000, guid: 96d7503cd4afe9344818df29758d2c2b, type: 3}
+  - {fileID: 8300000, guid: e9f6b798ed75cff40b77a5cbdea6a6f6, type: 3}
   UnityOnCrash:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5230636631326190857}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 62642abea73bbd445b6223679399dc51, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   UnityOnBoost:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5230636631326190857}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: PlayOneShot
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 3733697c3a873f24f91853e1689cba5e, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!82 &5230636631326190857
 AudioSource:
   m_ObjectHideFlags: 0
