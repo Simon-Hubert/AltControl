@@ -10862,9 +10862,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spritesCountDown:
-  - {fileID: 461208744, guid: 6696115079b10ec43a4057267e63a864, type: 3}
-  - {fileID: 412978043, guid: 6696115079b10ec43a4057267e63a864, type: 3}
-  - {fileID: -2132237910, guid: 6696115079b10ec43a4057267e63a864, type: 3}
+  - {fileID: 21300000, guid: 3d3ecfa5f9d98f245b1aec0ddb3fea66, type: 3}
+  - {fileID: 21300000, guid: 510ee58e5d4c69446baee59e55f191f4, type: 3}
+  - {fileID: 21300000, guid: b842de9e1a463c2498f9af6e35fbf429, type: 3}
   _img: {fileID: 1792794624}
 --- !u!114 &1792794624
 MonoBehaviour:
