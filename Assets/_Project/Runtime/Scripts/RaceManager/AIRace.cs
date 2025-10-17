@@ -42,6 +42,7 @@ public class AIRace : RaceManager
         }
         
         SpawnPlayer(spawns, forwardDir, i);
+        PlayerObj = _racers.Find(w => w.IsPlayer).transform.parent.gameObject;
         StartRace();
     }
 
@@ -114,7 +115,7 @@ public class AIRace : RaceManager
         foreach (Racer racer in _racers)
         {
             racer.UpdateProgress(_checkPoints);
-            if (racer.HasFinished)
+            if (racer.HasFinished && racer.IsPlayer)
             {
                 StopRace();
             }
