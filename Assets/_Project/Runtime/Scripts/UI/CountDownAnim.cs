@@ -20,7 +20,15 @@ public class CountDownAnim : MonoBehaviour
     public void CountDown(int i)
     {
         _img.sprite = _spritesCountDown[i];
-        StartCoroutine(Animate());
+        if (i != 3)
+        {
+            StartCoroutine(Animate());
+        }
+        else{
+            _img.SetNativeSize();
+            StartCoroutine(Animate());
+        }
+        
     }
 
     IEnumerator Animate()
