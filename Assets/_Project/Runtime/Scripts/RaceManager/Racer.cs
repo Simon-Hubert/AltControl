@@ -10,6 +10,7 @@ public class Racer : MonoBehaviour
     bool _hasFinished = false;
     bool _isAlive = true;
     int _currentLap;
+    private bool _isPlayer = false;
     private int _lastCheckpointIndex = 0;
     private int _lapsToWin;
     float _totalTime;
@@ -31,6 +32,7 @@ public class Racer : MonoBehaviour
     public CheckPoint NextCheckpoint => _nextCheckpoint;
     public CheckPoint CurrentCheckpoint => _checkpoints[_lastCheckpointIndex];
     public List<CheckPoint> Checkpoints => _checkpoints;
+    public bool IsPlayer => _isPlayer;
     private int _placement;
 
     public int Placement
@@ -52,7 +54,7 @@ public class Racer : MonoBehaviour
 
     [SerializeField] private UnityEvent<CheckPoint> _onCheckPointPassed;
 
-    public void Init(List<CheckPoint> checkPoints, int lapsToWin)
+    public void Init(List<CheckPoint> checkPoints, int lapsToWin, bool isPlayer)
     {
         _checkpoints = checkPoints;
         _nextCheckpoint = _checkpoints[1];
@@ -62,6 +64,7 @@ public class Racer : MonoBehaviour
         _isAlive = true;
         _totalTime = 0;
         _lapsToWin = lapsToWin;
+        _isPlayer = isPlayer;
     }
     
     public void SetRacerName(string racerName) => _racerName = racerName;
@@ -124,12 +127,12 @@ public class Racer : MonoBehaviour
         return progress;
     }
     
-    public void InitSimulation(List<CheckPoint> checkPoints, int lapsToWin, float speed)
-    {
-        Init(checkPoints, lapsToWin);
-        _speed = speed;
-        _targetPos = _checkpoints[0].transform.position;
-    }
+    //public void InitSimulation(List<CheckPoint> checkPoints, int lapsToWin, float speed)
+    //{
+    //    Init(checkPoints, lapsToWin);
+    //    _speed = speed;
+    //    _targetPos = _checkpoints[0].transform.position;
+    //}
 
     public void SimulateMovement(float deltaTime)
     {

@@ -8,6 +8,7 @@ public class CheckPoint : MonoBehaviour
     [SerializeField] private int _index;
     [SerializeField] private bool _isFinishLine;
     [SerializeField] private float _width;
+    [SerializeField] private List<ParticleSystem> _onomatopées = new List<ParticleSystem>();
 
     private bool _passed = false;
     
@@ -16,20 +17,21 @@ public class CheckPoint : MonoBehaviour
     private float _respawnBusTime;
     
     private Queue<RespawnHandle> _respawnQueue = new Queue<RespawnHandle>();
-    
-
-    public event Action OnLastLap;
 
     private void OnTriggerEnter(Collider other)
     {
         Racer racer = other.GetComponent<Racer>();
         if (racer != null)
         {
+            if (racer.IsPlayer)
+            {
+                StartCoroutine(PlayParticles());
+            }
             racer.OnCheckPointPassed(this);
             if ( _isFinishLine && racer.CurrentLap == racer.LapsToWin - 1 && !_passed)
             {
                 _passed = true;
-                OnLastLap?.Invoke();
+                RaceManager.Instance.LastLap();
             }
         }
     }
@@ -83,5 +85,18 @@ public class CheckPoint : MonoBehaviour
         }
     }
 
+    IEnumerator PlayParticles()
+    {
+        foreach (ParticleSystem p in _onomatopées)
+        {
+            p.Play();
+            AudioSource a = p.gameObject.GetComponent<AudioSource>();
+            if (a != null)
+            {
+                a.Play();
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
     
 }

@@ -8,6 +8,7 @@ public class CollisionController : MonoBehaviour
 
     public event Action OnRespawn;
     public event Action<Vector3> OnCollide; 
+    public event Action<Vector3> OnCrash;
 
     private void Awake() {
         ChariotConfig config = Resources.Load<ChariotConfig>("ChariotConfig");
@@ -18,9 +19,11 @@ public class CollisionController : MonoBehaviour
         Vector3 force = other.impulse; // C'est en World
         
         if (force.magnitude > _respawnForce) {
+            OnCrash?.Invoke(other.GetContact(0).point);
             OnRespawn?.Invoke();
         }
         
         OnCollide?.Invoke(force);
     }
+    
 }

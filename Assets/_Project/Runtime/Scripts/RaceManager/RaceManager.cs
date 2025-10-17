@@ -46,7 +46,6 @@ public abstract class RaceManager : MonoBehaviour
         {
             _checkPoints = checkpoints;
             _checkPoints.OrderBy(c => c.Index).ToList();
-            _checkPoints[0].OnLastLap += LastLap;
         }
         else
         {
@@ -58,8 +57,8 @@ public abstract class RaceManager : MonoBehaviour
         
         _racers = FindObjectsOfType<Racer>().ToList();
         
-        foreach (var r in _racers)
-            r.Init(_checkPoints, _raceConfig.Laps);
+        //foreach (var r in _racers)
+        //    r.Init(_checkPoints, _raceConfig.Laps);
         _raceStarted = true;
         _raceFinished = false;
     }

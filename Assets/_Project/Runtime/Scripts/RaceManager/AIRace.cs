@@ -24,10 +24,14 @@ public class AIRace : RaceManager
     public override void Init(List<CheckPoint> checkpoints = null)
     {
         base.Init(checkpoints);
-        foreach (IAConfig aiConfig in Resources.LoadAll("AIConfigs"))
-        {
-            _aiConfigs.Add(aiConfig);
+
+        if (_aiConfigs.Count <= 0) {
+            foreach (IAConfig aiConfig in Resources.LoadAll<IAConfig>("AIConfigs"))
+            {
+                _aiConfigs.Add(aiConfig);
+            }
         }
+        
         Vector3 startPos = _checkPoints[0].transform.position;
         Vector3 nextPos = _checkPoints[1].transform.position;
         Vector3 forwardDir = (nextPos - startPos).normalized;
@@ -50,13 +54,14 @@ public class AIRace : RaceManager
         Racer racer = go.GetComponentInChildren<Racer>();
         racer.SetRacerName($"Racer_{index + 1}");
         AIInput input = go.GetComponentInChildren<AIInput>();
-        racer.Init(_checkPoints, _raceConfig.Laps);
+        racer.Init(_checkPoints, _raceConfig.Laps, false);
         input.Init(_aiConfigs[UnityEngine.Random.Range(0, _aiConfigs.Count)]);
         OnRaceStarted += input.StartUp;
         _racers.Add(racer);
     }
     
     private void SpawnPlayer(List<Transform> spawns, Vector3 forwardDir, int index) {
+        if (!_playerPrefab) return;
         Transform spawn = spawns[^1];
         GameObject go = Instantiate(_playerPrefab, spawn.position, Quaternion.LookRotation(forwardDir, Vector3.up));
         spawns.Remove(spawn);
@@ -64,7 +69,7 @@ public class AIRace : RaceManager
         go.name = $"Racer_{index + 1}";
         Racer racer = go.GetComponentInChildren<Racer>();
         racer.SetRacerName($"Racer_{index + 1}");
-        racer.Init(_checkPoints, _raceConfig.Laps);
+        racer.Init(_checkPoints, _raceConfig.Laps, true);
         PlayerInput input = go.GetComponent<PlayerInput>();
         OnRaceStarted += input.StartUp;
         _racers.Add(racer);
@@ -97,6 +102,11 @@ public class AIRace : RaceManager
         }
     }
 
+    public override void LastLap()
+    {
+        Debug.Log("Last lap");
+        GetComponent<AudioSource>().pitch *= 1.15f;
+    }
     public override void UpdateRace()
     {
         base.UpdateRace();

@@ -25,7 +25,7 @@ public class Placement : MonoBehaviour
     }
 
     private void UpdateLapUI(int currentLap) {
-        _textLap.text = $"{currentLap} / {_racer.LapsToWin+1}";
+        _textLap.text = $"{currentLap + 1} / {_racer.LapsToWin+1}";
     }
 
     
