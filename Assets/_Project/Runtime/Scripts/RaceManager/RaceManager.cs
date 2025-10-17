@@ -19,6 +19,7 @@ public abstract class RaceManager : MonoBehaviour
     public UnityEvent UnityOnRaceStarted;
     public UnityEvent UnityOnRaceStopped;
     public UnityEvent UnityOnCountdownRace;
+    public UnityEvent UnityOnGo;
     
     public event Action OnRaceStarted;
     public event Action<int> OnCountDownRace;
@@ -118,11 +119,18 @@ public abstract class RaceManager : MonoBehaviour
 
     IEnumerator CountdownRace()
     {
-        UnityOnCountdownRace?.Invoke();
 
         for (int i = 0; i < _countDownRace; i++)
         {
             OnCountDownRace?.Invoke(i);
+            if (i == _countDownRace - 1)
+            {
+                UnityOnGo?.Invoke();
+            }
+            else
+            {
+                UnityOnCountdownRace?.Invoke();
+            }
             yield return new WaitForSeconds(1);
         }
         
