@@ -933,6 +933,7 @@ GameObject:
   - component: {fileID: 6397297336200752888}
   - component: {fileID: 352115554903407427}
   - component: {fileID: 5561816399882672281}
+  - component: {fileID: 5974300845662685235}
   m_Layer: 0
   m_Name: Horses
   m_TagString: Untagged
@@ -1313,6 +1314,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97aabacaa38f53e4fa99c9cb8ba0d2c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5974300845662685235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7583105396572166920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dbd21d4802ea094d9e8ad5ed694a476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mask:
+    serializedVersion: 2
+    m_Bits: 8
+  _timeUntilDeath: 5
+  _distance: 5
+  _onDeathFromSky:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2813661637482098982}
+        m_TargetAssemblyTypeName: Respawn, Assembly-CSharp
+        m_MethodName: OnRespawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8990504818367133752
 GameObject:
   m_ObjectHideFlags: 0

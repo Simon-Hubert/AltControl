@@ -799,6 +799,7 @@ GameObject:
   - component: {fileID: 3874752559602561887}
   - component: {fileID: 3387435001150859636}
   - component: {fileID: 195458837743045205}
+  - component: {fileID: 6852491618247456176}
   m_Layer: 0
   m_Name: Horses
   m_TagString: Untagged
@@ -1163,6 +1164,38 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6852491618247456176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7583105396572166920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dbd21d4802ea094d9e8ad5ed694a476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mask:
+    serializedVersion: 2
+    m_Bits: 8
+  _timeUntilDeath: 5
+  _distance: 5
+  _onDeathFromSky:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2813661637482098982}
+        m_TargetAssemblyTypeName: Respawn, Assembly-CSharp
+        m_MethodName: OnRespawn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8335495948539288447
 GameObject:
   m_ObjectHideFlags: 0

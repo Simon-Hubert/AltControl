@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcbbc85995e2181469045de200b4d900, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _sceneName: ProtoLDRomain
+  _sceneName: Remap
 --- !u!114 &770321922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1622,6 +1622,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  UnityOnGo:
+    m_PersistentCalls:
+      m_Calls: []
+  PlayerObj: {fileID: 0}
   _playerPrefab: {fileID: 0}
   _aiPrefab: {fileID: 5921030339573441373, guid: f1341014018d6764c80862e76af78cac, type: 3}
   isTest: 0
