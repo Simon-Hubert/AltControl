@@ -20,7 +20,7 @@ public class MenuCamera : MonoBehaviour
         RaceManager.Instance.OnRaceStarted -= SetRacers;
     }
 
-    private void SetRacers() {
+    public void SetRacers() {
         _racers = RaceManager.Instance.Racers.ToArray();
         StartCoroutine(ChangeFollowRoutine());
     }
