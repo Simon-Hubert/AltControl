@@ -22,7 +22,7 @@ public class Respawn : MonoBehaviour
     private void OnEnable() {
         CollisionManager collisionManager = GetComponent<CollisionManager>();
         collisionManager.OnRespawn += OnRespawn;
-        dotValue = Mathf.Cos(DeathAngle);
+        dotValue = Mathf.Cos(DeathAngle*Mathf.Deg2Rad);
     }
     
     private void OnDisable() {

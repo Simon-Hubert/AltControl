@@ -86,7 +86,7 @@ public class Placement : MonoBehaviour
 
             if (!hasImageChanged && p > 0.5) {
                 hasImageChanged = true;
-                _textLap.text = $"{currentLap + 1} / {_racer.LapsToWin+1}";
+                _textLap.text = $"{currentLap + 1} / {_racer.LapsToWin}";
             }
             
             _textLap.rectTransform.localRotation = Quaternion.Euler(0,0,angle);
