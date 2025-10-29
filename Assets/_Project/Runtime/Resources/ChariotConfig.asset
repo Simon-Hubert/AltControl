@@ -15,7 +15,7 @@ MonoBehaviour:
   MaxSpeed: 60
   MaxBackSpeed: 10
   BrakeFactor: 4
-  SteerAngle: 40
+  SteerAngle: 50
   RushForce: 25
   Friction: 0.3
   DriftFactor: 3
@@ -52,7 +52,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  SideForce: 25
+  SideForce: 34
   SideForceTime: 2
   SideForceCurve:
     serializedVersion: 2
@@ -60,20 +60,20 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 4.2182055
+      outSlope: 4.2182055
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.05453776
     - serializedVersion: 3
       time: 0.5500777
       value: 0.9398474
-      inSlope: 0.36718094
-      outSlope: 0.36718094
+      inSlope: 0.38105726
+      outSlope: 0.38105726
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33342746
+      inWeight: 0.30312875
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1

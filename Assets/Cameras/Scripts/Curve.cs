@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+/*using UnityEditor;
 using UnityEngine;
 
 [Serializable]
@@ -36,4 +36,4 @@ public class Curve
         
         Handles.DrawBezier(worldA, worldD, worldB, worldC, col, Texture2D.whiteTexture, 1f);
     }
-}
+}*/

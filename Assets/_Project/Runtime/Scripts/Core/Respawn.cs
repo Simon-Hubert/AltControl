@@ -27,7 +27,7 @@ public class Respawn : MonoBehaviour
     }
 
     private void Update() {
-        if(Vector3.Dot(_transform.up, Vector3.up) < 0.7) OnRespawn();
+        if(Vector3.Dot(_transform.up, Vector3.up) < 0.1) OnRespawn();
     }
 
     public void OnRespawn() {
