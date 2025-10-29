@@ -18,10 +18,9 @@ public class Placement : MonoBehaviour
     private float _baseTextSize;
     
 
-    private void Start() {
-        _baseSize = _imagePlacement.rectTransform.localScale.x;
+    private void Awake() {
         _baseTextSize = _textLap.rectTransform.localScale.x;
-
+        _baseSize = _imagePlacement.rectTransform.localScale.x;
     }
 
     public void SetRacer(Racer racer) {

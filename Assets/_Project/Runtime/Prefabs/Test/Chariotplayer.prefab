@@ -583,6 +583,7 @@ MonoBehaviour:
   _visual: {fileID: 959785118649654388}
   _collisions: {fileID: 7214697852458632207}
   _rb: {fileID: 5527695312049132380}
+  DeathAngle: 60
 --- !u!114 &1030663333691156845
 MonoBehaviour:
   m_ObjectHideFlags: 0

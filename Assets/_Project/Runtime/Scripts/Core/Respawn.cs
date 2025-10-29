@@ -12,6 +12,9 @@ public class Respawn : MonoBehaviour
     [SerializeField] private GameObject _visual;
     [SerializeField] private CollisionManager _collisions;
     [SerializeField] private Rigidbody _rb;
+
+    [SerializeField] private float DeathAngle;
+    private float dotValue;
     
     private CheckPoint _spawnPoint;
     private bool _isRespawning;
@@ -19,6 +22,7 @@ public class Respawn : MonoBehaviour
     private void OnEnable() {
         CollisionManager collisionManager = GetComponent<CollisionManager>();
         collisionManager.OnRespawn += OnRespawn;
+        dotValue = Mathf.Cos(DeathAngle);
     }
     
     private void OnDisable() {
@@ -27,7 +31,7 @@ public class Respawn : MonoBehaviour
     }
 
     private void Update() {
-        if(Vector3.Dot(_transform.up, Vector3.up) < 0.1) OnRespawn();
+        if(Vector3.Dot(_transform.up, Vector3.up) < dotValue) OnRespawn();
     }
 
     public void OnRespawn() {
