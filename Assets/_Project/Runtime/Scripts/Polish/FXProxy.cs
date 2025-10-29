@@ -19,7 +19,7 @@ public class FXProxy : MonoBehaviour
     private Vector3 _spawnPos;
     private Camera _camera;
 
-    private void Start()
+    private void OnEnable()
     {
         if (_isPlayer)
         {
@@ -32,6 +32,21 @@ public class FXProxy : MonoBehaviour
         RaceManager.Instance.OnRaceStarted += UnityOnStartUp.Invoke;
         _collisionControllerHorse.OnCrash += SetSFXPos;
         _collisionControllerChariot.OnCrash += SetSFXPos;
+    }
+    
+    private void OnDisable()
+    {
+        if (_isPlayer)
+        {
+            _camera = Camera.main;
+            _chariot.OnBoost -= _camera.gameObject.GetComponentInChildren<ParticleSystem>().Play;
+        }
+        _chariot.OnBoost -= UnityOnBoost.Invoke;
+        _collisionManager.OnCollide -= UnityOnCollision.Invoke;
+        _collisionManager.OnRespawn -= UnityOnCrash.Invoke;
+        RaceManager.Instance.OnRaceStarted -= UnityOnStartUp.Invoke;
+        _collisionControllerHorse.OnCrash -= SetSFXPos;
+        _collisionControllerChariot.OnCrash -= SetSFXPos;
     }
 
     public void SetSFXPos(Vector3 position)
