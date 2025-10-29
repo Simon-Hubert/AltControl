@@ -10,9 +10,13 @@ public class OnGround : MonoBehaviour
     [SerializeField] private UnityEvent _onDeathFromSky;
 
     private float _timer;
+
+    bool onGround = true;
+    public bool IsOnGround => onGround;
     
     private void Update() {
-        if (!Physics.Raycast(transform.position, -transform.up, _distance, _mask)) {
+        onGround = Physics.Raycast(transform.position, -transform.up, _distance, _mask);
+        if (!onGround) {
             _timer += Time.deltaTime;
         }
         else {
